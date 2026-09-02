@@ -1,0 +1,11 @@
+[[redirects]]
+  from = "https://juntablanca.es/*"
+  to = "https://juntablanca.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.juntablanca.es/*"
+  to = "https://juntablanca.com/:splat"
+  status = 301
+  force = true
