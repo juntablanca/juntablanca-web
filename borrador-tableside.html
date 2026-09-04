@@ -183,6 +183,15 @@
   .about-grid h2{font-size:clamp(26px,3.2vw,36px); margin-bottom:24px; letter-spacing:-0.03em;}
   .about-grid p.lead{font-size:19px; color:#312e2b; margin-bottom:16px; letter-spacing:-0.2px; line-height:1.5;}
   .about-grid p.sub{font-size:16px; color:var(--muted); line-height:1.55; max-width:440px;}
+  .about-image{margin-top:32px; border-radius:4px; overflow:hidden; aspect-ratio:4/3;}
+  .about-image img{width:100%; height:100%; object-fit:cover;}
+
+  /* Icons */
+  .svc-icon, .why-icon{
+    width:44px; height:44px; border-radius:50%; background:var(--accent-soft); color:var(--accent-dark);
+    display:flex; align-items:center; justify-content:center; margin-bottom:14px;
+  }
+  .svc-icon svg, .why-icon svg{width:21px; height:21px;}
   .counters{display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:48px;}
   .counter-item{border-top:1px solid var(--line); padding-top:16px;}
   .counter-num{font-size:clamp(32px,3.4vw,44px); font-weight:800; letter-spacing:-0.03em; color:var(--ink); display:flex; align-items:baseline; gap:2px;}
@@ -195,7 +204,8 @@
     display:grid; grid-template-columns:80px 1fr auto; gap:32px; align-items:center;
     padding:36px 0; border-bottom:1px solid var(--line);
   }
-  .service-num{font-size:15px; font-weight:700; color:var(--accent);}
+  .service-num{font-size:15px; font-weight:700; color:var(--accent); display:flex; flex-direction:column; gap:12px;}
+  .service-num svg{width:24px; height:24px; color:var(--accent);}
   .service-body h3{font-size:22px; margin-bottom:8px; letter-spacing:-0.02em;}
   .service-body p{font-size:15px; color:var(--muted); max-width:520px;}
   .service-tags{display:flex; gap:8px; flex-wrap:wrap; justify-self:end;}
@@ -236,8 +246,11 @@
   .testi-note{font-size:12px; color:var(--muted); margin-top:20px; font-style:italic;}
 
   /* Why choose us */
-  .why-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:48px;}
-  .why-item{background:var(--bg); padding:36px;}
+  .why-split{display:grid; grid-template-columns:0.85fr 1.15fr; gap:48px; align-items:stretch; margin-top:48px;}
+  .why-split-image{border-radius:4px; overflow:hidden;}
+  .why-split-image img{width:100%; height:100%; object-fit:cover; min-height:320px;}
+  .why-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
+  .why-item{background:var(--bg); padding:32px;}
   .why-item .num{font-size:12px; color:var(--accent); font-weight:700; margin-bottom:14px; display:block;}
   .why-item h4{font-size:19px; margin-bottom:10px; letter-spacing:-0.02em;}
   .why-item p{font-size:14px; color:var(--muted); line-height:1.55;}
@@ -257,11 +270,13 @@
   }
   .cta::before{
     content:""; position:absolute; right:-80px; top:-80px; width:280px; height:280px;
-    border-radius:50%; background:radial-gradient(circle, var(--accent) 0%, transparent 70%); opacity:0.25;
+    border-radius:50%; background:radial-gradient(circle, var(--accent) 0%, transparent 70%); opacity:0.3; z-index:1;
   }
-  .cta h2{font-size:clamp(28px,3.4vw,40px); margin-bottom:16px; letter-spacing:-0.03em; position:relative;}
-  .cta p{color:#B9B6AF; font-size:17px; margin-bottom:0; max-width:420px; letter-spacing:-0.1px; line-height:1.5; position:relative;}
-  .cta form{display:flex; flex-direction:column; gap:14px; position:relative;}
+  .cta-video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;}
+  .cta-overlay{position:absolute; inset:0; background:linear-gradient(120deg, rgba(17,17,17,0.93) 0%, rgba(17,17,17,0.8) 100%); z-index:0;}
+  .cta h2{font-size:clamp(28px,3.4vw,40px); margin-bottom:16px; letter-spacing:-0.03em; position:relative; z-index:2;}
+  .cta p{color:#B9B6AF; font-size:17px; margin-bottom:0; max-width:420px; letter-spacing:-0.1px; line-height:1.5; position:relative; z-index:2;}
+  .cta form{display:flex; flex-direction:column; gap:14px; position:relative; z-index:2;}
   .cta input, .cta textarea{
     background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.22);
     border-radius:2px; padding:13px 16px; color:#fff; font-size:14px; font-family:inherit;
@@ -300,6 +315,8 @@
   .footer-col h5{font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:16px; color:var(--muted);}
   .footer-col a{display:block; font-size:14px; margin-bottom:10px; opacity:0.85;}
   .footer-col a:hover{opacity:1; color:var(--accent);}
+  .footer-col a.has-icon{display:flex; align-items:center; gap:9px;}
+  .footer-col a.has-icon svg{width:15px; height:15px; color:var(--accent); flex-shrink:0;}
   .footer-bottom{
     margin-top:48px; padding-top:24px; border-top:1px solid var(--line);
     font-size:12px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
@@ -327,6 +344,7 @@
     .service-row{grid-template-columns:1fr; gap:12px;}
     .service-tags{justify-self:start;}
     .work-grid{grid-template-columns:1fr;}
+    .why-split{grid-template-columns:1fr;}
     .why-grid{grid-template-columns:1fr;}
     .process-grid{grid-template-columns:repeat(2,1fr);}
     .cta{grid-template-columns:1fr; padding:40px;}
@@ -413,6 +431,9 @@
       <div class="reveal">
         <div class="section-eyebrow">(Sobre nosotros)</div>
         <h2>Creemos que las reformas merecen un equipo que de verdad se implique.</h2>
+        <div class="about-image">
+          <img src="assets/about_ejecucion.jpg" alt="Detalle de ejecución artesanal en madera de roble">
+        </div>
       </div>
       <div class="reveal">
         <p class="lead">Nos presentamos con el equipo, el proceso y los resultados que de verdad transforman tu cocina o tu baño — sin sorpresas, sin subcontratas invisibles.</p>
@@ -446,7 +467,10 @@
     <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:560px;">El Motor de Reformas de Junta Blanca.</h2>
     <div class="services-list" data-reveal-group>
       <div class="service-row reveal">
-        <div class="service-num">01</div>
+        <div class="service-num">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="7" rx="1"/><circle cx="7" cy="6.5" r="1"/><circle cx="11" cy="6.5" r="1"/><path d="M3 14h18M3 14v6a1 1 0 0 0 1 1h4v-4h8v4h4a1 1 0 0 0 1-1v-6"/></svg>
+          01
+        </div>
         <div class="service-body">
           <h3>Reformas de cocina</h3>
           <p>Diseño funcional, electrodomésticos integrados y encimeras de alta resistencia adaptadas a tu espacio.</p>
@@ -458,7 +482,10 @@
         </div>
       </div>
       <div class="service-row reveal">
-        <div class="service-num">02</div>
+        <div class="service-num">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-3z"/><path d="M4 12V6a2 2 0 0 1 3-1.7"/><path d="M9 19v2M15 19v2"/><path d="M17 8c1-1 1-3-.5-3.5"/></svg>
+          02
+        </div>
         <div class="service-body">
           <h3>Reformas de baño</h3>
           <p>Duchas a ras de suelo, mamparas a medida y materiales antihumedad con acabados de spa.</p>
@@ -470,7 +497,10 @@
         </div>
       </div>
       <div class="service-row reveal">
-        <div class="service-num">03</div>
+        <div class="service-num">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l6-1.5L20.5 8.5a1.5 1.5 0 0 0 0-2.1l-1.9-1.9a1.5 1.5 0 0 0-2.1 0L5.5 15.5 4 21z"/><path d="M14 6l4 4"/></svg>
+          03
+        </div>
         <div class="service-body">
           <h3>Diseño e interiorismo</h3>
           <p>Proyecto en 3D antes de mover un solo azulejo, para que veas el resultado antes de decidir.</p>
@@ -481,7 +511,10 @@
         </div>
       </div>
       <div class="service-row reveal">
-        <div class="service-num">04</div>
+        <div class="service-num">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 18l9 5 9-5"/></svg>
+          04
+        </div>
         <div class="service-body">
           <h3>Materiales y acabados</h3>
           <p>Selección de piedra natural, madera de roble y grifería premium para un resultado duradero.</p>
@@ -527,6 +560,20 @@
         <div class="wc-body">
           <p>Baño en Ruzafa — mampara a medida y acabados en piedra natural.</p>
           <div class="wc-tags"><span>Mamparas</span><span>Piedra natural</span></div>
+        </div>
+      </div>
+      <div class="work-card reveal">
+        <img src="assets/trabajo_cocina3.jpg" alt="Cocina verde y latón en Benimaclet">
+        <div class="wc-body">
+          <p>Cocina en Benimaclet — cabinetes verde mate y grifería en latón.</p>
+          <div class="wc-tags"><span>Materiales</span><span>Grifería</span></div>
+        </div>
+      </div>
+      <div class="work-card reveal">
+        <img src="assets/trabajo_bano3.jpg" alt="Baño con zellige en Campanar">
+        <div class="wc-body">
+          <p>Baño en Campanar — ducha a ras de suelo con zellige artesanal.</p>
+          <div class="wc-tags"><span>Zellige</span><span>Ducha a ras de suelo</span></div>
         </div>
       </div>
     </div>
@@ -577,26 +624,35 @@
   <div class="container">
     <div class="section-eyebrow reveal">Por qué elegirnos</div>
     <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:600px;">Por qué las familias de Valencia eligen Junta Blanca.</h2>
-    <div class="why-grid" data-reveal-group>
-      <div class="why-item reveal">
-        <span class="num">01</span>
-        <h4>Ejecución en tu vivienda</h4>
-        <p>No mandamos un PDF y desaparecemos. Venimos a la obra regularmente a reunirnos, planificar y trabajar contigo.</p>
+    <div class="why-split">
+      <div class="why-split-image reveal">
+        <img src="assets/why_detalle.jpg" alt="Detalle de medición y acabados en una reforma">
       </div>
-      <div class="why-item reveal">
-        <span class="num">02</span>
-        <h4>Solo cocinas y baños</h4>
-        <p>No somos generalistas. Cada proceso, cada material y cada proveedor está pensado específicamente para estos espacios.</p>
-      </div>
-      <div class="why-item reveal">
-        <span class="num">03</span>
-        <h4>Equipo propio en Valencia</h4>
-        <p>Sin subcontratas invisibles ni intermediarios. El mismo equipo te acompaña de principio a fin.</p>
-      </div>
-      <div class="why-item reveal">
-        <span class="num">04</span>
-        <h4>El detalle bien hecho</h4>
-        <p>Medimos el éxito en acabados, plazos y tranquilidad — no solo en el precio final del presupuesto.</p>
+      <div class="why-grid" data-reveal-group>
+        <div class="why-item reveal">
+          <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg></div>
+          <span class="num">01</span>
+          <h4>Ejecución en tu vivienda</h4>
+          <p>No mandamos un PDF y desaparecemos. Venimos a la obra regularmente a reunirnos, planificar y trabajar contigo.</p>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.6" fill="currentColor"/></svg></div>
+          <span class="num">02</span>
+          <h4>Solo cocinas y baños</h4>
+          <p>No somos generalistas. Cada proceso, cada material y cada proveedor está pensado específicamente para estos espacios.</p>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8" r="3"/><path d="M2 20c0-3.3 2.9-6 6.5-6S15 16.7 15 20"/><circle cx="17" cy="9" r="2.4"/><path d="M22 20c0-2.6-1.9-4.8-4.5-5.5"/></svg></div>
+          <span class="num">03</span>
+          <h4>Equipo propio en Valencia</h4>
+          <p>Sin subcontratas invisibles ni intermediarios. El mismo equipo te acompaña de principio a fin.</p>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 3v6c0 4.8-3 8.3-7 10-4-1.7-7-5.2-7-10V5l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <span class="num">04</span>
+          <h4>El detalle bien hecho</h4>
+          <p>Medimos el éxito en acabados, plazos y tranquilidad — no solo en el precio final del presupuesto.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -619,6 +675,10 @@
 <section id="contacto">
   <div class="container">
     <div class="cta reveal">
+      <video class="cta-video" autoplay muted loop playsinline poster="assets/about_ejecucion.jpg">
+        <source src="assets/cta_video.mp4" type="video/mp4">
+      </video>
+      <div class="cta-overlay"></div>
       <div>
         <h2>¿Lista para reformar?<br><span class="soft">Hablemos de tu próxima cocina o baño.</span></h2>
         <p>Cuéntanos qué espacio quieres reformar y te contactamos en menos de 24h con una propuesta inicial.</p>
@@ -695,9 +755,9 @@
       </div>
       <div class="footer-col">
         <h5>Contacto</h5>
-        <a href="mailto:hola@juntablanca.com">hola@juntablanca.com</a>
-        <a href="tel:+34623004942">+34 623 00 49 42</a>
-        <a href="#">Valencia, España</a>
+        <a href="mailto:hola@juntablanca.com" class="has-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>hola@juntablanca.com</a>
+        <a href="tel:+34623004942" class="has-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v4a2 2 0 0 1-2 2C9.5 21 3 14.5 3 6a2 2 0 0 1 1-2z"/></svg>+34 623 00 49 42</a>
+        <a href="#" class="has-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>Valencia, España</a>
       </div>
     </div>
     <div class="footer-bottom">
