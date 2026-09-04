@@ -46,10 +46,9 @@
     display:flex; align-items:center; justify-content:space-between;
     height:84px;
   }
-  .brand{display:flex; align-items:center; gap:12px;}
-  .brand-text{line-height:1.1;}
-  .brand-text .word{font-weight:800; font-size:15px; letter-spacing:0.5px; text-transform:uppercase; display:block;}
-  .brand-text .sub{font-weight:500; font-size:9px; letter-spacing:1.5px; color:var(--muted); text-transform:uppercase;}
+  .brand{display:flex; align-items:center;}
+  .brand img.logo-full{height:34px; width:auto; display:block;}
+  .footer-brand .brand img.logo-full{height:38px;}
   .nav-links{display:flex; gap:36px; font-size:14px; font-weight:500;}
   .nav-links a{opacity:0.75; transition:opacity .15s ease;}
   .nav-links a:hover{opacity:1;}
@@ -206,11 +205,7 @@
 <header>
   <nav class="container">
     <div class="brand">
-      <div class="cross"><span class="v"></span><span class="h"></span></div>
-      <div class="brand-text">
-        <span class="word">Junta Blanca</span>
-        <span class="sub">Cocinas y baños</span>
-      </div>
+      <img class="logo-full" src="assets/logo.svg" alt="Junta Blanca — Cocinas y Baños">
     </div>
     <div class="nav-links">
       <a href="#servicios">Cocinas</a>
@@ -333,11 +328,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="brand">
-          <div class="cross"><span class="v"></span><span class="h"></span></div>
-          <div class="brand-text">
-            <span class="word">Junta Blanca</span>
-            <span class="sub">Cocinas y baños</span>
-          </div>
+          <img class="logo-full" src="assets/logo.svg" alt="Junta Blanca — Cocinas y Baños">
         </div>
         <p>El detalle bien hecho. Reformas integrales de cocinas y baños en Valencia.</p>
       </div>
