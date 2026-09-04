@@ -919,7 +919,7 @@
     <button class="newsletter-close" id="newsletter-close" aria-label="Cerrar">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
-    <div class="newsletter-image" style="background-image:url('assets/hero_cocina.jpg');"></div>
+    <div class="newsletter-image" style="background-image:url('assets/newsletter_modal.jpg');"></div>
     <div class="newsletter-body">
       <span class="newsletter-badge">Newsletter</span>
       <h3>Únete a la comunidad Junta Blanca</h3>
@@ -944,7 +944,7 @@
   <button class="newsletter-close" id="newsletter-bar-close" aria-label="Cerrar">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
   </button>
-  <div class="newsletter-image" style="background-image:url('assets/why_detalle.jpg');"></div>
+  <div class="newsletter-image" style="background-image:url('assets/newsletter_bar.jpg');"></div>
   <div class="newsletter-body">
     <span class="newsletter-badge">Newsletter</span>
     <h3>Únete a la comunidad Junta Blanca</h3>
@@ -1135,7 +1135,7 @@
     document.getElementById('newsletter-bar-close').addEventListener('click', closeBar);
 
     if (!isSubscribed() && shownCount() < 1) {
-      setTimeout(openModal, 2500);
+      setTimeout(openModal, 3500);
     }
 
     let scrollTriggered = false;
