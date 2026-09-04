@@ -168,6 +168,19 @@
   .btn-icon svg{width:100%; height:100%;}
   .btn:hover .btn-icon{transform:translateX(5px);}
 
+  /* Repeated mini CTA next to section headings */
+  .section-head-row{display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap;}
+  .btn-mini{
+    display:inline-flex; align-items:center; gap:8px; flex-shrink:0;
+    padding:13px 24px; border-radius:100px; border:1px solid var(--ink);
+    color:var(--ink); font-size:13px; font-weight:600; letter-spacing:0.2px;
+    transition:background .25s ease, color .25s ease, transform .2s ease;
+  }
+  .btn-mini:hover{background:var(--ink); color:#fff;}
+  .btn-mini:hover .btn-icon{transform:translateX(4px);}
+  .btn-mini:active{transform:scale(0.95);}
+  .btn-mini .btn-icon{width:15px; height:15px; transition:transform .3s cubic-bezier(.65,0,.35,1);}
+
   /* Rotating badge */
   .rotating-badge{position:relative; width:120px; height:120px; flex-shrink:0; color:#fff;}
   .badge-spin{animation:spin 16s linear infinite; width:100%; height:100%;}
@@ -456,6 +469,7 @@
       <div class="reveal">
         <div class="section-eyebrow">(Sobre nosotros)</div>
         <h2>Creemos que las reformas merecen un equipo que de verdad se implique.</h2>
+        <a href="#contacto" class="btn-mini" style="margin-top:20px;">Habla con nuestro equipo<span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
         <div class="about-image">
           <img src="assets/about_ejecucion.jpg" alt="Detalle de ejecución artesanal en madera de roble">
         </div>
@@ -488,8 +502,13 @@
 
 <section id="servicios">
   <div class="container">
-    <div class="section-eyebrow reveal">Qué hacemos</div>
-    <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:560px;">El Motor de Reformas de Junta Blanca.</h2>
+    <div class="section-head-row">
+      <div>
+        <div class="section-eyebrow reveal">Qué hacemos</div>
+        <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:560px;">El Motor de Reformas de Junta Blanca.</h2>
+      </div>
+      <a href="#contacto" class="btn-mini reveal">Habla con nuestro equipo<span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    </div>
     <div class="services-list" data-reveal-group>
       <div class="service-row reveal">
         <div class="service-num">
@@ -556,8 +575,13 @@
 
 <div class="work-wrap" id="trabajo">
   <div class="container" style="padding:110px 32px;">
-    <div class="section-eyebrow reveal">Nuestro trabajo</div>
-    <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:560px;">Cada proyecto, <span class="soft">una historia bien hecha.</span></h2>
+    <div class="section-head-row">
+      <div>
+        <div class="section-eyebrow reveal">Nuestro trabajo</div>
+        <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:560px;">Cada proyecto, <span class="soft">una historia bien hecha.</span></h2>
+      </div>
+      <a href="#contacto" class="btn-mini reveal">Habla con nuestro equipo<span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    </div>
     <div class="work-grid" data-reveal-group>
       <div class="work-card reveal">
         <div class="wc-media"><img src="assets/hero_cocina.jpg" alt="Cocina blanca y roble en Valencia"></div>
@@ -647,8 +671,13 @@
 
 <section>
   <div class="container">
-    <div class="section-eyebrow reveal">Por qué elegirnos</div>
-    <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:600px;">Por qué las familias de Valencia eligen Junta Blanca.</h2>
+    <div class="section-head-row">
+      <div>
+        <div class="section-eyebrow reveal">Por qué elegirnos</div>
+        <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:600px;">Por qué las familias de Valencia eligen Junta Blanca.</h2>
+      </div>
+      <a href="#contacto" class="btn-mini reveal">Habla con nuestro equipo<span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    </div>
     <div class="why-split">
       <div class="why-split-image reveal">
         <img src="assets/why_detalle.jpg" alt="Detalle de medición y acabados en una reforma">
