@@ -68,7 +68,8 @@
     overflow:hidden;
   }
   .hero video, .hero img{
-    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    position:absolute; top:-60px; left:0; right:0; height:calc(100% + 60px);
+    width:100%; object-fit:cover; will-change:transform;
   }
   .hero::after{
     content:"";
@@ -361,6 +362,33 @@
 </footer>
 
 <script>
+  (function () {
+    const heroEl = document.querySelector('.hero');
+    const heroMedia = document.querySelectorAll('.hero video, .hero img');
+    const maxOffset = 60;
+    let ticking = false;
+
+    function updateParallax() {
+      const rect = heroEl.getBoundingClientRect();
+      let progress = -rect.top / rect.height;
+      progress = Math.max(0, Math.min(1, progress));
+      const offset = progress * maxOffset;
+      heroMedia.forEach(function (el) {
+        el.style.transform = 'translateY(' + offset + 'px)';
+      });
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    updateParallax();
+  })();
+
   const form = document.getElementById('contact-form');
   const status = document.getElementById('contact-status');
   form.addEventListener('submit', function (e) {
