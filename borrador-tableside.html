@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Junta Blanca — Cocinas y Baños (Borrador)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F6F4;
+    --panel:#EAEAEA;
+    --ink:#111111;
+    --muted:#A8A8A5;
+    --line:#DEDEDA;
+    --white:#FFFFFF;
+    --accent:#B5603D;
+    --accent-dark:#8F4A2F;
+    --accent-soft:#F1E0D5;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Inter', Arial, sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.5;
+    font-weight:400;
+  }
+  img{max-width:100%; display:block;}
+  a{color:inherit; text-decoration:none;}
+  .container{max-width:1160px; margin:0 auto; padding:0 32px;}
+  h1,h2,h3,h4{line-height:1.08; letter-spacing:-0.02em; font-weight:700;}
+  .soft{font-weight:400; color:var(--muted);}
+  .accent-text{color:var(--accent);}
+
+  /* Draft banner */
+  .draft-banner{
+    background:var(--ink); color:#fff; text-align:center; font-size:13px;
+    padding:10px 16px; font-weight:600; letter-spacing:0.2px;
+  }
+
+  /* Cross isotype */
+  .cross{width:26px; height:26px; position:relative; flex-shrink:0;}
+  .cross span{position:absolute; background:var(--ink);}
+  .cross .v{width:2px; height:26px; left:12px; top:0;}
+  .cross .h{width:26px; height:2px; left:0; top:12px;}
+  .cross.white span{background:#fff;}
+  .cross.accent span{background:var(--accent);}
+
+  /* Header */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(246,246,244,0.9);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.container{
+    position:relative; display:flex; align-items:center; justify-content:space-between;
+    height:84px; gap:16px;
+  }
+  .brand{display:flex; align-items:center;}
+  .brand img.logo-full{height:56px; width:auto; display:block;}
+  .footer-brand .brand img.logo-full{height:60px;}
+  .nav-links{display:flex; align-items:center; gap:28px; font-size:14px; font-weight:500; white-space:nowrap;}
+  .nav-links a{opacity:0.75; transition:opacity .15s ease, color .15s ease; position:relative;}
+  .nav-links a:hover{opacity:1; color:var(--accent);}
+  .nav-links a.is-active{opacity:1; color:var(--accent);}
+  .nav-item{position:relative;}
+  .nav-drop-trigger{display:inline-flex; align-items:center; gap:5px; cursor:default;}
+  .nav-drop-trigger svg{width:10px; height:10px; transition:transform .2s ease;}
+  .nav-item:hover .nav-drop-trigger svg{transform:rotate(180deg);}
+  .nav-dropdown{
+    position:absolute; top:100%; left:50%; transform:translateX(-50%) translateY(4px);
+    background:#fff; border:1px solid var(--line); border-radius:4px;
+    padding:8px; min-width:140px; box-shadow:0 12px 24px rgba(17,17,17,0.08);
+    opacity:0; visibility:hidden; transition:opacity .18s ease, transform .18s ease;
+  }
+  .nav-item:hover .nav-dropdown{opacity:1; visibility:visible; transform:translateX(-50%) translateY(0);}
+  .nav-dropdown a{display:block; padding:8px 10px; border-radius:3px; opacity:0.85; font-size:13px;}
+  .nav-dropdown a:hover{opacity:1; background:var(--accent-soft); color:var(--accent-dark);}
+  .nav-cta{
+    background:var(--accent); color:#fff; border:1px solid var(--accent);
+    padding:11px 22px; font-size:13px; font-weight:600; letter-spacing:0.3px;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .nav-cta:hover{background:var(--accent-dark); border-color:var(--accent-dark);}
+
+  /* Mobile nav toggle */
+  .nav-toggle{
+    display:none; flex-direction:column; justify-content:center; gap:5px;
+    width:40px; height:40px; background:none; border:none; cursor:pointer; padding:0;
+  }
+  .nav-toggle span{
+    display:block; width:22px; height:2px; background:var(--ink); margin:0 auto;
+    transition:transform .25s ease, opacity .25s ease;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .mobile-menu{
+    position:fixed; top:84px; left:0; right:0; bottom:0; z-index:49;
+    background:var(--bg); overflow-y:auto;
+    transform:translateY(-12px); opacity:0; visibility:hidden;
+    transition:transform .25s ease, opacity .25s ease, visibility .25s;
+  }
+  .mobile-menu.open{transform:translateY(0); opacity:1; visibility:visible;}
+  .mobile-menu .container{display:flex; flex-direction:column; padding:16px 32px 48px;}
+  .mobile-menu > .container > a{
+    padding:18px 0; border-bottom:1px solid var(--line);
+    font-size:20px; font-weight:600;
+  }
+  .mobile-menu .mm-sub{display:flex; flex-direction:column; padding-left:16px; border-bottom:1px solid var(--line);}
+  .mobile-menu .mm-sub a{padding:12px 0; font-size:15px; font-weight:500; color:var(--muted);}
+
+  /* Hero */
+  .hero{
+    position:relative;
+    min-height:92vh;
+    display:flex; align-items:flex-end;
+    color:#fff;
+    overflow:hidden;
+  }
+  .hero video, .hero img{
+    position:absolute; top:-60px; left:0; right:0; height:calc(100% + 60px);
+    width:100%; object-fit:cover; will-change:transform;
+  }
+  .hero::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(17,17,17,0.08) 0%, rgba(17,17,17,0.7) 100%);
+  }
+  .hero-content{position:relative; z-index:2; padding:64px 32px 96px; width:100%;}
+  .hero-top-row{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:auto;}
+  .eyebrow{
+    text-transform:uppercase; letter-spacing:2.5px; font-size:11px;
+    font-weight:600; color:var(--accent-soft); margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(36px,5.6vw,66px); font-weight:700; max-width:700px;
+    line-height:1.06; margin-bottom:22px; letter-spacing:-0.02em;
+  }
+  .hero p{font-size:19px; max-width:500px; color:#EDEAE4; margin-bottom:34px; font-weight:400; letter-spacing:-0.2px; line-height:1.5;}
+  .btn-row{display:flex; gap:16px; flex-wrap:wrap; align-items:center;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:15px 28px;
+    font-weight:600; font-size:14px; letter-spacing:0.2px;
+    transition:opacity .15s ease, background .15s ease;
+  }
+  .btn-primary{background:var(--accent); color:#fff;}
+  .btn-primary:hover{background:var(--accent-dark);}
+  .btn-ghost{border:1px solid rgba(255,255,255,0.55); color:#fff;}
+  .btn-ghost:hover{background:rgba(255,255,255,0.12);}
+
+  /* Rotating badge */
+  .rotating-badge{position:relative; width:120px; height:120px; flex-shrink:0; color:#fff;}
+  .badge-spin{animation:spin 16s linear infinite; width:100%; height:100%;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .badge-center{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  }
+  .badge-center .cross{transform:scale(0.9);}
+
+  /* Scroll cue */
+  .scroll-cue{
+    display:flex; align-items:center; gap:10px; margin-top:56px;
+    font-size:11px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.7);
+  }
+  .scroll-cue .line{width:1px; height:28px; background:rgba(255,255,255,0.4); animation:scrollcue 1.8s ease-in-out infinite;}
+  @keyframes scrollcue{0%,100%{transform:scaleY(0.4); opacity:0.4;} 50%{transform:scaleY(1); opacity:1;}}
+
+  /* Sections */
+  section{padding:110px 0;}
+  .section-eyebrow{
+    text-transform:uppercase; letter-spacing:2px; font-size:11px;
+    font-weight:700; color:var(--accent); margin-bottom:16px;
+  }
+
+  /* About + counters */
+  .about-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:64px; align-items:start;}
+  .about-grid h2{font-size:clamp(26px,3.2vw,36px); margin-bottom:24px; letter-spacing:-0.03em;}
+  .about-grid p.lead{font-size:19px; color:#312e2b; margin-bottom:16px; letter-spacing:-0.2px; line-height:1.5;}
+  .about-grid p.sub{font-size:16px; color:var(--muted); line-height:1.55; max-width:440px;}
+  .counters{display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:48px;}
+  .counter-item{border-top:1px solid var(--line); padding-top:16px;}
+  .counter-num{font-size:clamp(32px,3.4vw,44px); font-weight:800; letter-spacing:-0.03em; color:var(--ink); display:flex; align-items:baseline; gap:2px;}
+  .counter-num .accent-text{font-size:0.6em;}
+  .counter-label{font-size:13px; color:var(--muted); margin-top:6px;}
+
+  /* Services numbered */
+  .services-list{border-top:1px solid var(--line);}
+  .service-row{
+    display:grid; grid-template-columns:80px 1fr auto; gap:32px; align-items:center;
+    padding:36px 0; border-bottom:1px solid var(--line);
+  }
+  .service-num{font-size:15px; font-weight:700; color:var(--accent);}
+  .service-body h3{font-size:22px; margin-bottom:8px; letter-spacing:-0.02em;}
+  .service-body p{font-size:15px; color:var(--muted); max-width:520px;}
+  .service-tags{display:flex; gap:8px; flex-wrap:wrap; justify-self:end;}
+  .tag{
+    background:var(--accent-soft); color:var(--accent-dark);
+    font-size:12px; font-weight:600; padding:6px 12px; border-radius:20px; white-space:nowrap;
+  }
+
+  /* Work / projects */
+  .work-wrap{background:var(--white); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .work-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:28px; margin-top:48px;}
+  .work-card{border:1px solid var(--line); border-radius:6px; overflow:hidden; background:var(--bg);}
+  .work-card img{height:280px; object-fit:cover;}
+  .work-card .wc-body{padding:24px;}
+  .work-card p{font-size:16px; font-weight:600; margin-bottom:14px; letter-spacing:-0.01em;}
+  .work-card .wc-tags{display:flex; gap:8px; flex-wrap:wrap;}
+  .work-card .wc-tags span{font-size:11px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px;}
+  .work-card .wc-tags span:not(:last-child)::after{content:"·"; margin-left:8px; color:var(--line);}
+
+  /* Testimonials */
+  .testi-wrap{overflow:hidden;}
+  .testi-track{display:flex; gap:24px; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:8px; scrollbar-width:none;}
+  .testi-track::-webkit-scrollbar{display:none;}
+  .testi-card{
+    scroll-snap-align:start; flex:0 0 min(420px,86vw);
+    background:var(--white); border:1px solid var(--line); border-radius:8px; padding:32px;
+  }
+  .testi-stars{color:var(--accent); font-size:14px; letter-spacing:2px; margin-bottom:16px;}
+  .testi-quote{font-size:17px; line-height:1.5; margin-bottom:20px; letter-spacing:-0.1px;}
+  .testi-name{font-weight:700; font-size:14px;}
+  .testi-role{font-size:13px; color:var(--muted);}
+  .testi-nav{display:flex; gap:12px; margin-top:28px;}
+  .testi-nav button{
+    width:44px; height:44px; border-radius:50%; border:1px solid var(--line); background:var(--white);
+    cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .15s ease, border-color .15s ease;
+  }
+  .testi-nav button:hover{background:var(--accent); border-color:var(--accent); color:#fff;}
+  .testi-note{font-size:12px; color:var(--muted); margin-top:20px; font-style:italic;}
+
+  /* Why choose us */
+  .why-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:48px;}
+  .why-item{background:var(--bg); padding:36px;}
+  .why-item .num{font-size:12px; color:var(--accent); font-weight:700; margin-bottom:14px; display:block;}
+  .why-item h4{font-size:19px; margin-bottom:10px; letter-spacing:-0.02em;}
+  .why-item p{font-size:14px; color:var(--muted); line-height:1.55;}
+
+  /* Process */
+  .process-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:28px; margin-top:56px;}
+  .process-step{border-top:1px solid var(--ink); padding-top:18px;}
+  .process-step .num{font-size:12px; color:var(--accent); font-weight:600; margin-bottom:14px; display:block;}
+  .process-step h4{font-size:15px; font-weight:700; margin-bottom:8px;}
+  .process-step p{font-size:13px; color:var(--muted); line-height:1.45;}
+
+  /* CTA */
+  .cta{
+    background:var(--ink); color:#fff; border-radius:4px;
+    padding:72px; display:grid; grid-template-columns:1.2fr 1fr; gap:48px; align-items:center;
+    position:relative; overflow:hidden;
+  }
+  .cta::before{
+    content:""; position:absolute; right:-80px; top:-80px; width:280px; height:280px;
+    border-radius:50%; background:radial-gradient(circle, var(--accent) 0%, transparent 70%); opacity:0.25;
+  }
+  .cta h2{font-size:clamp(28px,3.4vw,40px); margin-bottom:16px; letter-spacing:-0.03em; position:relative;}
+  .cta p{color:#B9B6AF; font-size:17px; margin-bottom:0; max-width:420px; letter-spacing:-0.1px; line-height:1.5; position:relative;}
+  .cta form{display:flex; flex-direction:column; gap:14px; position:relative;}
+  .cta input, .cta textarea{
+    background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.22);
+    border-radius:2px; padding:13px 16px; color:#fff; font-size:14px; font-family:inherit;
+  }
+  .cta input::placeholder, .cta textarea::placeholder{color:#8a877f;}
+  .cta button{
+    background:var(--accent); color:#fff; border:none; padding:15px; border-radius:2px;
+    font-weight:700; font-size:14px; cursor:pointer; letter-spacing:0.3px; transition:background .15s ease;
+  }
+  .cta button:hover{background:var(--accent-dark);}
+
+  /* FAQ */
+  .faq-list{border-top:1px solid var(--line); margin-top:48px;}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-item summary{
+    list-style:none; cursor:pointer; padding:26px 0; font-size:17px; font-weight:600;
+    display:flex; justify-content:space-between; align-items:center; gap:16px;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary .plus{
+    width:24px; height:24px; position:relative; flex-shrink:0; transition:transform .25s ease;
+  }
+  .faq-item summary .plus::before, .faq-item summary .plus::after{
+    content:""; position:absolute; background:var(--ink); top:50%; left:50%;
+  }
+  .faq-item summary .plus::before{width:14px; height:2px; transform:translate(-50%,-50%);}
+  .faq-item summary .plus::after{width:2px; height:14px; transform:translate(-50%,-50%);}
+  .faq-item[open] summary .plus{transform:rotate(45deg);}
+  .faq-item p{font-size:15px; color:var(--muted); line-height:1.6; padding-bottom:26px; max-width:640px;}
+
+  /* Footer */
+  footer{border-top:1px solid var(--line); padding:56px 0 40px;}
+  .footer-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:32px;}
+  .footer-brand .brand{margin-bottom:14px;}
+  .footer-brand p{font-size:13px; color:var(--muted); max-width:220px;}
+  .footer-col h5{font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:16px; color:var(--muted);}
+  .footer-col a{display:block; font-size:14px; margin-bottom:10px; opacity:0.85;}
+  .footer-col a:hover{opacity:1; color:var(--accent);}
+  .footer-bottom{
+    margin-top:48px; padding-top:24px; border-top:1px solid var(--line);
+    font-size:12px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  }
+
+  /* Scroll reveal */
+  .reveal{
+    opacity:0; transform:translateY(28px);
+    transition:opacity .7s cubic-bezier(.16,.84,.44,1), transform .7s cubic-bezier(.16,.84,.44,1);
+  }
+  .reveal.in-view{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1; transform:none; transition:none;}
+    .badge-spin{animation:none;}
+  }
+
+  @media (max-width:900px){
+    .nav-links{display:none;}
+    .nav-cta{display:none;}
+    .nav-toggle{display:flex;}
+    .hero-top-row{flex-direction:column; gap:24px;}
+    .rotating-badge{align-self:flex-end;}
+    .about-grid{grid-template-columns:1fr; gap:32px;}
+    .counters{grid-template-columns:repeat(2,1fr);}
+    .service-row{grid-template-columns:1fr; gap:12px;}
+    .service-tags{justify-self:start;}
+    .work-grid{grid-template-columns:1fr;}
+    .why-grid{grid-template-columns:1fr;}
+    .process-grid{grid-template-columns:repeat(2,1fr);}
+    .cta{grid-template-columns:1fr; padding:40px;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="draft-banner">Borrador de diseño — inspirado en tableside.com.au — no publicado en producción</div>
+
+<header id="top">
+  <nav class="container">
+    <div class="brand">
+      <img class="logo-full" src="assets/logo.svg" alt="Junta Blanca — Cocinas y Baños">
+    </div>
+    <div class="nav-links">
+      <a href="#top" class="is-active">Inicio</a>
+      <div class="nav-item">
+        <a href="#servicios" class="nav-drop-trigger">Servicios
+          <svg viewBox="0 0 12 8" fill="none"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="nav-dropdown">
+          <a href="#servicios">Cocinas</a>
+          <a href="#servicios">Baños</a>
+        </div>
+      </div>
+      <a href="#trabajo">Proyectos</a>
+      <a href="#nosotros">Sobre nosotros</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a href="#contacto" class="nav-cta">Contacto</a>
+    <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<div class="mobile-menu" id="mobile-menu">
+  <div class="container">
+    <a href="#top">Inicio</a>
+    <a href="#servicios">Servicios</a>
+    <div class="mm-sub">
+      <a href="#servicios">Cocinas</a>
+      <a href="#servicios">Baños</a>
+    </div>
+    <a href="#trabajo">Proyectos</a>
+    <a href="#nosotros">Sobre nosotros</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+</div>
+
+<section class="hero">
+  <video id="hero-media" autoplay muted loop playsinline poster="assets/hero_cocina.jpg">
+    <source src="assets/hero_video.mp4" type="video/mp4">
+  </video>
+  <div class="hero-content container">
+    <div class="hero-top-row">
+      <div class="eyebrow">Reformas de cocinas y baños · Valencia</div>
+      <div class="rotating-badge">
+        <svg class="badge-spin" viewBox="0 0 200 200">
+          <defs><path id="badgeCircle" d="M100,100 m-82,0 a82,82 0 1,1 164,0 a82,82 0 1,1 -164,0"/></defs>
+          <text font-size="12.5" letter-spacing="3" fill="currentColor" font-weight="600">
+            <textPath href="#badgeCircle">JUNTA BLANCA · EL DETALLE BIEN HECHO · </textPath>
+          </text>
+        </svg>
+        <div class="badge-center"><div class="cross white"><span class="v"></span><span class="h"></span></div></div>
+      </div>
+    </div>
+    <h1>El detalle bien hecho.</h1>
+    <p>Diseñamos y construimos cocinas y baños que funcionan, duran y te hacen la vida más fácil.</p>
+    <div class="btn-row">
+      <a href="#contacto" class="btn btn-primary">Habla con nuestro equipo →</a>
+      <a href="#trabajo" class="btn btn-ghost">Ver proyectos</a>
+    </div>
+    <div class="scroll-cue"><div class="line"></div> Scroll</div>
+  </div>
+</section>
+
+<section id="nosotros">
+  <div class="container">
+    <div class="about-grid">
+      <div class="reveal">
+        <div class="section-eyebrow">(Sobre nosotros)</div>
+        <h2>Creemos que las reformas merecen un equipo que de verdad se implique.</h2>
+      </div>
+      <div class="reveal">
+        <p class="lead">Nos presentamos con el equipo, el proceso y los resultados que de verdad transforman tu cocina o tu baño — sin sorpresas, sin subcontratas invisibles.</p>
+        <p class="sub">Ya estés reformando una cocina o un baño completo, nosotros nos encargamos de todo: diseño 3D, materiales, obra y postventa, para que tú solo tengas que decidir el resultado final.</p>
+        <div class="counters">
+          <div class="counter-item">
+            <div class="counter-num"><span class="counter" data-target="12">0</span><span class="accent-text">+</span></div>
+            <div class="counter-label">Años de experiencia</div>
+          </div>
+          <div class="counter-item">
+            <div class="counter-num"><span class="counter" data-target="300">0</span><span class="accent-text">+</span></div>
+            <div class="counter-label">Reformas entregadas</div>
+          </div>
+          <div class="counter-item">
+            <div class="counter-num"><span class="counter" data-target="4.9" data-decimals="1">0</span><span class="accent-text">★</span></div>
+            <div class="counter-label">Valoración media</div>
+          </div>
+          <div class="counter-item">
+            <div class="counter-num"><span class="counter" data-target="15">0</span><span class="accent-text">d</span></div>
+            <div class="counter-label">Plazo medio de obra</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="servicios">
+  <div class="container">
+    <div class="section-eyebrow reveal">Qué hacemos</div>
+    <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:560px;">El Motor de Reformas de Junta Blanca.</h2>
+    <div class="services-list" data-reveal-group>
+      <div class="service-row reveal">
+        <div class="service-num">01</div>
+        <div class="service-body">
+          <h3>Reformas de cocina</h3>
+          <p>Diseño funcional, electrodomésticos integrados y encimeras de alta resistencia adaptadas a tu espacio.</p>
+        </div>
+        <div class="service-tags">
+          <span class="tag">Diseño 3D</span>
+          <span class="tag">Encimeras</span>
+          <span class="tag">Electrodomésticos</span>
+        </div>
+      </div>
+      <div class="service-row reveal">
+        <div class="service-num">02</div>
+        <div class="service-body">
+          <h3>Reformas de baño</h3>
+          <p>Duchas a ras de suelo, mamparas a medida y materiales antihumedad con acabados de spa.</p>
+        </div>
+        <div class="service-tags">
+          <span class="tag">Impermeabilización</span>
+          <span class="tag">Griferías</span>
+          <span class="tag">Mamparas</span>
+        </div>
+      </div>
+      <div class="service-row reveal">
+        <div class="service-num">03</div>
+        <div class="service-body">
+          <h3>Diseño e interiorismo</h3>
+          <p>Proyecto en 3D antes de mover un solo azulejo, para que veas el resultado antes de decidir.</p>
+        </div>
+        <div class="service-tags">
+          <span class="tag">Render 3D</span>
+          <span class="tag">Planos</span>
+        </div>
+      </div>
+      <div class="service-row reveal">
+        <div class="service-num">04</div>
+        <div class="service-body">
+          <h3>Materiales y acabados</h3>
+          <p>Selección de piedra natural, madera de roble y grifería premium para un resultado duradero.</p>
+        </div>
+        <div class="service-tags">
+          <span class="tag">Piedra natural</span>
+          <span class="tag">Roble</span>
+          <span class="tag">Latón</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="work-wrap" id="trabajo">
+  <div class="container" style="padding:110px 32px;">
+    <div class="section-eyebrow reveal">Nuestro trabajo</div>
+    <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:560px;">Cada proyecto, <span class="soft">una historia bien hecha.</span></h2>
+    <div class="work-grid" data-reveal-group>
+      <div class="work-card reveal">
+        <img src="assets/hero_cocina.jpg" alt="Cocina blanca y roble en Valencia">
+        <div class="wc-body">
+          <p>Cocina en Valencia — reforma completa en 15 días, sin sorpresas de presupuesto.</p>
+          <div class="wc-tags"><span>Diseño</span><span>Obra</span><span>Acabados</span></div>
+        </div>
+      </div>
+      <div class="work-card reveal">
+        <img src="assets/servicio_bano.jpg" alt="Baño beige minimalista en El Saler">
+        <div class="wc-body">
+          <p>Baño en El Saler — de bañera antigua a ducha a ras de suelo en 10 días.</p>
+          <div class="wc-tags"><span>Impermeabilización</span><span>Griferías</span></div>
+        </div>
+      </div>
+      <div class="work-card reveal">
+        <img src="assets/galeria_cocina2.jpg" alt="Isla de cocina roble y blanco en Patacona">
+        <div class="wc-body">
+          <p>Cocina en Patacona — isla central a medida y electrodomésticos integrados.</p>
+          <div class="wc-tags"><span>Diseño 3D</span><span>Encimeras</span></div>
+        </div>
+      </div>
+      <div class="work-card reveal">
+        <img src="assets/galeria_bano2.jpg" alt="Baño con ducha en Ruzafa">
+        <div class="wc-body">
+          <p>Baño en Ruzafa — mampara a medida y acabados en piedra natural.</p>
+          <div class="wc-tags"><span>Mamparas</span><span>Piedra natural</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+    <div class="section-eyebrow reveal">Testimonios</div>
+    <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em;">Lo que dicen de nosotros.</h2>
+    <div class="testi-wrap reveal">
+      <div class="testi-track" id="testi-track">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"Entendieron exactamente lo que queríamos para la cocina y lo entregaron en el plazo acordado, sin sustos en el presupuesto."</p>
+          <div class="testi-name">Cliente — Reforma de cocina</div>
+          <div class="testi-role">Valencia</div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"El equipo vino a la obra varias veces, no solo mandaron un PDF y desaparecieron. Se nota que les importa el resultado."</p>
+          <div class="testi-name">Cliente — Reforma de baño</div>
+          <div class="testi-role">El Saler</div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"El render 3D fue clave para decidirnos por los materiales. El resultado final fue prácticamente idéntico a la propuesta."</p>
+          <div class="testi-name">Cliente — Diseño e interiorismo</div>
+          <div class="testi-role">Patacona</div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"Cuidan cada detalle, desde la selección de la grifería hasta el remate final del alicatado. Se nota la diferencia."</p>
+          <div class="testi-name">Cliente — Reforma integral</div>
+          <div class="testi-role">Ruzafa</div>
+        </div>
+      </div>
+      <div class="testi-nav">
+        <button id="testi-prev" aria-label="Anterior">←</button>
+        <button id="testi-next" aria-label="Siguiente">→</button>
+      </div>
+      <p class="testi-note">* Testimonios de ejemplo — sustituir por reseñas reales antes de publicar.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-eyebrow reveal">Por qué elegirnos</div>
+    <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:600px;">Por qué las familias de Valencia eligen Junta Blanca.</h2>
+    <div class="why-grid" data-reveal-group>
+      <div class="why-item reveal">
+        <span class="num">01</span>
+        <h4>Ejecución en tu vivienda</h4>
+        <p>No mandamos un PDF y desaparecemos. Venimos a la obra regularmente a reunirnos, planificar y trabajar contigo.</p>
+      </div>
+      <div class="why-item reveal">
+        <span class="num">02</span>
+        <h4>Solo cocinas y baños</h4>
+        <p>No somos generalistas. Cada proceso, cada material y cada proveedor está pensado específicamente para estos espacios.</p>
+      </div>
+      <div class="why-item reveal">
+        <span class="num">03</span>
+        <h4>Equipo propio en Valencia</h4>
+        <p>Sin subcontratas invisibles ni intermediarios. El mismo equipo te acompaña de principio a fin.</p>
+      </div>
+      <div class="why-item reveal">
+        <span class="num">04</span>
+        <h4>El detalle bien hecho</h4>
+        <p>Medimos el éxito en acabados, plazos y tranquilidad — no solo en el precio final del presupuesto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-eyebrow reveal">Nuestro proceso</div>
+    <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em;">Así trabajamos.</h2>
+    <div class="process-grid" data-reveal-group>
+      <div class="process-step reveal"><span class="num">01</span><h4>Escuchamos</h4><p>Entendemos tus necesidades y tu estilo de vida.</p></div>
+      <div class="process-step reveal"><span class="num">02</span><h4>Diseñamos</h4><p>Creamos propuestas a medida con atención a cada detalle.</p></div>
+      <div class="process-step reveal"><span class="num">03</span><h4>Planificamos</h4><p>Organizamos cada fase con precisión y transparencia.</p></div>
+      <div class="process-step reveal"><span class="num">04</span><h4>Ejecutamos</h4><p>Cuidamos la instalación con profesionales especializados.</p></div>
+      <div class="process-step reveal"><span class="num">05</span><h4>Acompañamos</h4><p>Estamos contigo incluso después de entregar tu proyecto.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="container">
+    <div class="cta reveal">
+      <div>
+        <h2>¿Lista para reformar?<br><span class="soft">Hablemos de tu próxima cocina o baño.</span></h2>
+        <p>Cuéntanos qué espacio quieres reformar y te contactamos en menos de 24h con una propuesta inicial.</p>
+      </div>
+      <form name="contacto" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="contact-form">
+        <input type="hidden" name="form-name" value="contacto">
+        <p hidden><label>No rellenar: <input name="bot-field"></label></p>
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="text" name="telefono" placeholder="Teléfono">
+        <textarea rows="3" name="mensaje" placeholder="Cuéntanos tu proyecto"></textarea>
+        <button type="submit">Enviar solicitud</button>
+        <p id="contact-status" style="font-size:13px; color:#B9B6AF; display:none;"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="container">
+    <div class="section-eyebrow reveal">FAQ</div>
+    <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em;">Preguntas frecuentes.</h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>¿Con qué tipo de proyectos trabajáis? <span class="plus"></span></summary>
+        <p>Reformas integrales de cocinas y baños en viviendas particulares, en Valencia y alrededores.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿En qué os diferenciáis de un reformista suelto? <span class="plus"></span></summary>
+        <p>Tienes un equipo completo — diseño 3D, interiorismo, dirección de obra y postventa — en vez de una sola persona intentando hacerlo todo.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Qué incluye el servicio? <span class="plus"></span></summary>
+        <p>Diseño 3D, selección de materiales, gestión de instalaciones, alicatado y seguimiento por fases hasta la entrega final.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Cuánto tarda una reforma? <span class="plus"></span></summary>
+        <p>La mayoría de proyectos se completan en 10-20 días de obra, dependiendo del alcance y el estado previo del espacio.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Trabajáis fuera de Valencia? <span class="plus"></span></summary>
+        <p>Trabajamos principalmente en Valencia y alrededores — consúltanos disponibilidad si tu proyecto está en otra zona.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Y si ya tengo un presupuesto de otra empresa? <span class="plus"></span></summary>
+        <p>Muchos clientes llegan porque el proyecto anterior no avanzaba. Revisamos lo que ya tienes y proponemos mejoras, o asumimos el proyecto completo.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand">
+          <img class="logo-full" src="assets/logo.svg" alt="Junta Blanca — Cocinas y Baños">
+        </div>
+        <p>El detalle bien hecho. Reformas integrales de cocinas y baños en Valencia.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Enlaces</h5>
+        <a href="#servicios">Cocinas</a>
+        <a href="#servicios">Baños</a>
+        <a href="#trabajo">Proyectos</a>
+        <a href="#nosotros">Sobre nosotros</a>
+      </div>
+      <div class="footer-col">
+        <h5>Información</h5>
+        <a href="#faq">FAQ</a>
+        <a href="#">Materiales</a>
+        <a href="#">Garantía</a>
+        <a href="#">Política de privacidad</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contacto</h5>
+        <a href="mailto:hola@juntablanca.com">hola@juntablanca.com</a>
+        <a href="tel:+34623004942">+34 623 00 49 42</a>
+        <a href="#">Valencia, España</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Junta Blanca. Todos los derechos reservados.</span>
+      <span>juntablanca.com</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    const toggle = document.querySelector('.nav-toggle');
+    const menu = document.getElementById('mobile-menu');
+    function closeMenu() {
+      menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+    toggle.addEventListener('click', function () {
+      const isOpen = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeMenu); });
+    window.addEventListener('resize', function () { if (window.innerWidth > 900) closeMenu(); });
+  })();
+
+  (function () {
+    const heroEl = document.querySelector('.hero');
+    const heroMedia = document.querySelectorAll('.hero video, .hero img');
+    const maxOffset = 60;
+    let ticking = false;
+    function updateParallax() {
+      const rect = heroEl.getBoundingClientRect();
+      let progress = -rect.top / rect.height;
+      progress = Math.max(0, Math.min(1, progress));
+      const offset = progress * maxOffset;
+      heroMedia.forEach(function (el) { el.style.transform = 'translateY(' + offset + 'px)'; });
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { requestAnimationFrame(updateParallax); ticking = true; }
+    }, { passive: true });
+    updateParallax();
+  })();
+
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.querySelectorAll('[data-reveal-group]').forEach(function (group) {
+      group.querySelectorAll(':scope > .reveal').forEach(function (el, i) {
+        el.style.transitionDelay = (i * 90) + 'ms';
+      });
+    });
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) { observer.observe(el); });
+  })();
+
+  (function () {
+    const counters = document.querySelectorAll('.counter');
+    if (!counters.length) return;
+    function animateCounter(el) {
+      const target = parseFloat(el.getAttribute('data-target'));
+      const decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+      const duration = 1400;
+      const start = performance.now();
+      function tick(now) {
+        const p = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const value = target * eased;
+        el.textContent = decimals ? value.toFixed(decimals) : Math.round(value);
+        if (p < 1) requestAnimationFrame(tick);
+        else el.textContent = decimals ? target.toFixed(decimals) : target;
+      }
+      requestAnimationFrame(tick);
+    }
+    const co = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          co.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    counters.forEach(function (el) { co.observe(el); });
+  })();
+
+  (function () {
+    const track = document.getElementById('testi-track');
+    const prev = document.getElementById('testi-prev');
+    const next = document.getElementById('testi-next');
+    if (!track) return;
+    function scrollByCard(dir) {
+      const card = track.querySelector('.testi-card');
+      const gap = 24;
+      const amount = (card ? card.offsetWidth : 400) + gap;
+      track.scrollBy({ left: dir * amount, behavior: 'smooth' });
+    }
+    prev.addEventListener('click', function () { scrollByCard(-1); });
+    next.addEventListener('click', function () { scrollByCard(1); });
+  })();
+
+  (function () {
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('contact-status');
+    if (!form) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const data = new URLSearchParams(new FormData(form)).toString();
+      fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: data })
+        .then(function () {
+          form.reset();
+          status.textContent = 'Gracias, hemos recibido tu solicitud. Te contactamos pronto.';
+          status.style.display = 'block';
+        })
+        .catch(function () {
+          status.textContent = 'Ha ocurrido un error. Escríbenos a hola@juntablanca.com.';
+          status.style.display = 'block';
+        });
+    });
+  })();
+</script>
+
+</body>
+</html>
