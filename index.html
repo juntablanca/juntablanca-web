@@ -15,6 +15,9 @@
     --muted:#A8A8A5;
     --line:#DEDEDA;
     --white:#FFFFFF;
+    --accent:#B5603D;
+    --accent-dark:#8F4A2F;
+    --accent-soft:#F1E0D5;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{
@@ -29,6 +32,7 @@
   .container{max-width:1160px; margin:0 auto; padding:0 32px;}
   h1,h2,h3,h4{line-height:1.08; letter-spacing:-0.02em; font-weight:700;}
   .soft{font-weight:400; color:var(--muted);}
+  .accent-text{color:var(--accent);}
 
   /* Cross isotype */
   .cross{width:26px; height:26px; position:relative; flex-shrink:0;}
@@ -36,6 +40,7 @@
   .cross .v{width:2px; height:26px; left:12px; top:0;}
   .cross .h{width:26px; height:2px; left:0; top:12px;}
   .cross.white span{background:#fff;}
+  .cross.accent span{background:var(--accent);}
 
   /* Header */
   header{
@@ -52,27 +57,16 @@
   .brand img.logo-full{height:56px; width:auto; display:block;}
   .footer-brand .brand img.logo-full{height:60px;}
   .nav-links{display:flex; align-items:center; gap:28px; font-size:14px; font-weight:500; white-space:nowrap;}
-  .nav-links a{opacity:0.75; transition:opacity .15s ease;}
-  .nav-links a:hover{opacity:1;}
-  .nav-item{position:relative;}
-  .nav-drop-trigger{display:inline-flex; align-items:center; gap:5px; cursor:default;}
-  .nav-drop-trigger svg{width:10px; height:10px; transition:transform .2s ease;}
-  .nav-item:hover .nav-drop-trigger svg{transform:rotate(180deg);}
-  .nav-dropdown{
-    position:absolute; top:100%; left:50%; transform:translateX(-50%) translateY(4px);
-    background:#fff; border:1px solid var(--line); border-radius:4px;
-    padding:8px; min-width:140px; box-shadow:0 12px 24px rgba(17,17,17,0.08);
-    opacity:0; visibility:hidden; transition:opacity .18s ease, transform .18s ease;
-  }
-  .nav-item:hover .nav-dropdown{opacity:1; visibility:visible; transform:translateX(-50%) translateY(0);}
-  .nav-dropdown a{display:block; padding:8px 10px; border-radius:3px; opacity:0.85; font-size:13px;}
-  .nav-dropdown a:hover{opacity:1; background:var(--bg);}
+  .nav-links a{opacity:0.75; transition:opacity .15s ease, color .15s ease; position:relative;}
+  .nav-links a:hover{opacity:1; color:var(--accent);}
+  .nav-links a.is-active{opacity:1; color:var(--accent);}
   .nav-cta{
-    border:1px solid var(--ink); padding:11px 22px;
-    font-size:13px; font-weight:600; letter-spacing:0.3px;
-    transition:background .15s ease, color .15s ease;
+    background:var(--accent); color:#fff; border:1px solid var(--accent);
+    padding:11px 22px; border-radius:100px; font-size:13px; font-weight:600; letter-spacing:0.3px;
+    transition:background .2s ease, border-color .2s ease, transform .15s ease;
   }
-  .nav-cta:hover{background:var(--ink); color:#fff;}
+  .nav-cta:hover{background:var(--accent-dark); border-color:var(--accent-dark); transform:translateY(-1px);}
+  .nav-cta:active{transform:scale(0.95);}
 
   /* Mobile nav toggle */
   .nav-toggle{
@@ -99,13 +93,11 @@
     padding:18px 0; border-bottom:1px solid var(--line);
     font-size:20px; font-weight:600;
   }
-  .mobile-menu .mm-sub{display:flex; flex-direction:column; padding-left:16px; border-bottom:1px solid var(--line);}
-  .mobile-menu .mm-sub a{padding:12px 0; font-size:15px; font-weight:500; color:var(--muted);}
 
   /* Hero */
   .hero{
     position:relative;
-    min-height:82vh;
+    min-height:92vh;
     display:flex; align-items:flex-end;
     color:#fff;
     overflow:hidden;
@@ -117,107 +109,220 @@
   .hero::after{
     content:"";
     position:absolute; inset:0;
-    background:linear-gradient(180deg, rgba(17,17,17,0.05) 0%, rgba(17,17,17,0.68) 100%);
+    background:linear-gradient(180deg, rgba(17,17,17,0.08) 0%, rgba(17,17,17,0.7) 100%);
   }
-  .hero-content{position:relative; z-index:2; padding:64px 32px 80px;}
+  .hero-content{position:relative; z-index:2; padding:64px 32px 96px; width:100%;}
+  .hero-top-row{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:auto;}
   .eyebrow{
     text-transform:uppercase; letter-spacing:2.5px; font-size:11px;
-    font-weight:600; color:#E8E4DC; margin-bottom:18px;
+    font-weight:600; color:var(--accent-soft); margin-bottom:18px;
   }
   .hero h1{
-    font-size:clamp(36px,5.6vw,64px); font-weight:700; max-width:680px;
-    line-height:1.06; margin-bottom:22px; letter-spacing:-0.5px;
+    font-size:clamp(36px,5.6vw,66px); font-weight:700; max-width:700px;
+    line-height:1.06; margin-bottom:22px; letter-spacing:-0.02em;
   }
   .hero p{font-size:19px; max-width:500px; color:#EDEAE4; margin-bottom:34px; font-weight:400; letter-spacing:-0.2px; line-height:1.5;}
-  .btn-row{display:flex; gap:16px; flex-wrap:wrap;}
-  .btn{
-    display:inline-flex; align-items:center; gap:8px;
-    padding:15px 28px;
-    font-weight:600; font-size:14px; letter-spacing:0.2px;
-    transition:opacity .15s ease;
-  }
-  .btn-primary{background:#fff; color:var(--ink);}
-  .btn-primary:hover{opacity:0.85;}
-  .btn-ghost{border:1px solid rgba(255,255,255,0.55); color:#fff;}
-  .btn-ghost:hover{background:rgba(255,255,255,0.12);}
+  .btn-row{display:flex; gap:16px; flex-wrap:wrap; align-items:center;}
 
-  /* Principles row */
-  .principles{
-    display:grid; grid-template-columns:repeat(4,1fr);
-    border-bottom:1px solid var(--line);
+  /* Pill button with inverting icon circle — solid fill <-> outline on hover */
+  .btn{
+    position:relative; display:inline-flex; align-items:center; gap:14px;
+    padding:5px 30px 5px 5px; border-radius:100px; border:2px solid var(--accent);
+    background:var(--accent); color:var(--ink);
+    font-weight:700; font-size:15px; letter-spacing:0.1px;
+    transition:background .3s ease, border-color .3s ease, transform .2s ease, box-shadow .3s ease;
   }
-  .principle{
-    padding:40px 32px; border-right:1px solid var(--line);
+  .btn:active{transform:scale(0.96);}
+  .btn-primary:hover{background:#fff; box-shadow:0 10px 26px rgba(181,96,61,0.3);}
+  .btn-circle{
+    width:42px; height:42px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    background:#fff; color:var(--accent);
+    transition:background .3s ease, color .3s ease;
   }
-  .principle:last-child{border-right:none;}
-  .principle .cross{margin-bottom:18px;}
-  .principle h4{font-size:13px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:8px;}
-  .principle p{font-size:13px; color:var(--muted); line-height:1.45;}
+  .btn-circle svg{width:19px; height:19px;}
+  .btn:hover .btn-circle{background:var(--accent); color:#fff;}
+  .btn-ghost{
+    background:transparent; border:1px solid rgba(255,255,255,0.55); color:#fff;
+    padding:17px 30px;
+  }
+  .btn-ghost:hover{background:rgba(255,255,255,0.14); border-color:#fff;}
+
+  /* Sliding label interaction */
+  .btn-label{position:relative; overflow:hidden; display:inline-block; height:1.25em; line-height:1.25em;}
+  .btn-label span{display:block; transition:transform .4s cubic-bezier(.65,0,.35,1);}
+  .btn-label span.dup{position:absolute; top:100%; left:0; white-space:nowrap;}
+  .btn:hover .btn-label span{transform:translateY(-100%);}
+
+  /* Small variant for repeated section CTAs */
+  .btn-sm{padding:4px 22px 4px 4px; font-size:13px; gap:10px;}
+  .btn-sm .btn-circle{width:32px; height:32px;}
+  .btn-sm .btn-circle svg{width:15px; height:15px;}
+
+  /* Repeated mini CTA next to section headings */
+  .section-head-row{display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap;}
+
+  /* Rotating badge */
+  .rotating-badge{position:relative; width:120px; height:120px; flex-shrink:0; color:#fff;}
+  .badge-spin{animation:spin 16s linear infinite; width:100%; height:100%;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .badge-center{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  }
+  .badge-center .cross{transform:scale(0.9);}
+
+  /* Scroll cue */
+  .scroll-cue{
+    display:flex; align-items:center; gap:10px; margin-top:56px;
+    font-size:11px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.7);
+  }
+  .scroll-cue .line{width:1px; height:28px; background:rgba(255,255,255,0.4); animation:scrollcue 1.8s ease-in-out infinite;}
+  @keyframes scrollcue{0%,100%{transform:scaleY(0.4); opacity:0.4;} 50%{transform:scaleY(1); opacity:1;}}
 
   /* Sections */
   section{padding:110px 0;}
   .section-eyebrow{
     text-transform:uppercase; letter-spacing:2px; font-size:11px;
-    font-weight:700; color:var(--muted); margin-bottom:16px;
+    font-weight:700; color:var(--accent); margin-bottom:16px;
   }
 
-  /* About split */
-  .about-grid{display:grid; grid-template-columns:0.85fr 1.15fr; gap:64px; align-items:center;}
-  .about-grid h2{font-size:clamp(28px,3.6vw,42px); margin-bottom:20px; letter-spacing:-0.03em;}
-  .about-grid p{font-size:18px; color:#4a4844; margin-bottom:32px; max-width:440px; letter-spacing:-0.2px; line-height:1.55;}
-  .about-grid img{border-radius:2px;}
-  .link-arrow{font-weight:600; font-size:14px; border-bottom:1px solid var(--ink); padding-bottom:3px; display:inline-flex; gap:8px;}
+  /* About + counters */
+  .about-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:64px; align-items:start;}
+  .about-grid h2{font-size:clamp(26px,3.2vw,36px); margin-bottom:24px; letter-spacing:-0.03em;}
+  .about-grid p.lead{font-size:19px; color:#312e2b; margin-bottom:16px; letter-spacing:-0.2px; line-height:1.5;}
+  .about-grid p.sub{font-size:16px; color:var(--muted); line-height:1.55; max-width:440px;}
+  .about-image{margin-top:32px; border-radius:4px; overflow:hidden; aspect-ratio:4/3; position:relative;}
+  .about-image img{position:absolute; top:-16%; left:0; width:100%; height:132%; object-fit:cover; will-change:transform;}
 
-  /* Gallery */
-  .gallery-wrap{background:var(--white); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
-  .gallery-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:48px; flex-wrap:wrap; gap:24px;}
-  .gallery-head h2{font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:460px;}
-  .gallery-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    grid-auto-rows:200px;
-    gap:14px;
+  /* Icons */
+  .svc-icon, .why-icon{
+    width:44px; height:44px; border-radius:50%; background:var(--accent-soft); color:var(--accent-dark);
+    display:flex; align-items:center; justify-content:center; margin-bottom:14px;
   }
-  .gallery-grid figure{position:relative; overflow:hidden; border-radius:2px;}
-  .gallery-grid img{width:100%; height:100%; object-fit:cover;}
-  .gallery-grid figcaption{
-    position:absolute; left:0; right:0; bottom:0;
-    padding:16px; font-size:12px; font-weight:600; color:#fff;
-    background:linear-gradient(0deg, rgba(17,17,17,0.55), transparent);
+  .svc-icon svg, .why-icon svg{width:21px; height:21px;}
+  .counters{display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:48px;}
+  .counter-item{border-top:1px solid var(--line); padding-top:16px;}
+  .counter-num{font-size:clamp(32px,3.4vw,44px); font-weight:800; letter-spacing:-0.03em; color:var(--ink); display:flex; align-items:baseline; gap:2px;}
+  .counter-num .accent-text{font-size:0.6em;}
+  .counter-label{font-size:13px; color:var(--muted); margin-top:6px;}
+
+  /* Services numbered */
+  .services-list{border-top:1px solid var(--line);}
+  .service-row{
+    display:grid; grid-template-columns:80px 1fr auto; gap:32px; align-items:center;
+    padding:36px 0; border-bottom:1px solid var(--line);
   }
-  .g-span2{grid-column:span 2; grid-row:span 2;}
-  .g-dark{
-    background:var(--ink); color:#fff; display:flex; flex-direction:column;
-    justify-content:center; padding:28px; border-radius:2px;
+  .service-num{font-size:15px; font-weight:700; color:var(--accent); display:flex; flex-direction:column; gap:12px;}
+  .service-num svg{width:24px; height:24px; color:var(--accent);}
+  .service-body h3{font-size:22px; margin-bottom:8px; letter-spacing:-0.02em;}
+  .service-body p{font-size:15px; color:var(--muted); max-width:520px;}
+  .service-tags{display:flex; gap:8px; flex-wrap:wrap; justify-self:end;}
+  .tag{
+    background:var(--accent-soft); color:var(--accent-dark);
+    font-size:12px; font-weight:600; padding:6px 12px; border-radius:20px; white-space:nowrap;
   }
-  .g-dark p{font-size:20px; font-weight:600; line-height:1.3; margin-bottom:14px;}
-  .g-dark span{font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted);}
+
+  /* Work / projects */
+  .work-wrap{background:var(--white); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .work-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:28px; margin-top:48px;}
+  .work-card{border:1px solid var(--line); border-radius:6px; overflow:hidden; background:var(--bg);}
+  .work-card .wc-media{position:relative; height:280px; overflow:hidden;}
+  .work-card .wc-media img{position:absolute; top:-16%; left:0; width:100%; height:132%; object-fit:cover; will-change:transform;}
+  .work-card .wc-body{padding:24px;}
+  .work-card p{font-size:16px; font-weight:600; margin-bottom:14px; letter-spacing:-0.01em;}
+  .work-card .wc-tags{display:flex; gap:8px; flex-wrap:wrap;}
+  .work-card .wc-tags span{font-size:11px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px;}
+  .work-card .wc-tags span:not(:last-child)::after{content:"·"; margin-left:8px; color:var(--line);}
+
+  /* Testimonials */
+  .testi-wrap{overflow:hidden;}
+  .testi-track{display:flex; gap:24px; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:8px; scrollbar-width:none;}
+  .testi-track::-webkit-scrollbar{display:none;}
+  .testi-card{
+    scroll-snap-align:start; flex:0 0 min(420px,86vw);
+    background:var(--white); border:1px solid var(--line); border-radius:8px; padding:32px;
+  }
+  .testi-stars{color:var(--accent); font-size:14px; letter-spacing:2px; margin-bottom:16px;}
+  .testi-quote{font-size:17px; line-height:1.5; margin-bottom:20px; letter-spacing:-0.1px;}
+  .testi-name{font-weight:700; font-size:14px;}
+  .testi-role{font-size:13px; color:var(--muted);}
+  .testi-nav{display:flex; gap:12px; margin-top:28px;}
+  .testi-nav button{
+    width:44px; height:44px; border-radius:50%; border:1px solid var(--line); background:var(--white);
+    cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .15s ease, border-color .15s ease;
+  }
+  .testi-nav button:hover{background:var(--accent); border-color:var(--accent); color:#fff;}
+  .testi-note{font-size:12px; color:var(--muted); margin-top:20px; font-style:italic;}
+
+  /* Why choose us */
+  .why-split{display:grid; grid-template-columns:0.85fr 1.15fr; gap:48px; align-items:stretch; margin-top:48px;}
+  .why-split-image{border-radius:4px; overflow:hidden; position:relative; min-height:320px;}
+  .why-split-image img{position:absolute; top:-16%; left:0; width:100%; height:132%; object-fit:cover; will-change:transform;}
+  .why-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
+  .why-item{background:var(--bg); padding:32px;}
+  .why-item .num{font-size:12px; color:var(--accent); font-weight:700; margin-bottom:14px; display:block;}
+  .why-item h4{font-size:19px; margin-bottom:10px; letter-spacing:-0.02em;}
+  .why-item p{font-size:14px; color:var(--muted); line-height:1.55;}
 
   /* Process */
   .process-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:28px; margin-top:56px;}
   .process-step{border-top:1px solid var(--ink); padding-top:18px;}
-  .process-step .num{font-size:12px; color:var(--muted); font-weight:600; margin-bottom:14px; display:block;}
+  .process-step .num{font-size:12px; color:var(--accent); font-weight:600; margin-bottom:14px; display:block;}
   .process-step h4{font-size:15px; font-weight:700; margin-bottom:8px;}
   .process-step p{font-size:13px; color:var(--muted); line-height:1.45;}
 
   /* CTA */
   .cta{
-    background:var(--ink); color:#fff; border-radius:2px;
-    padding:72px; display:grid; grid-template-columns:1.2fr 1fr; gap:48px; align-items:center;
+    background:var(--ink); color:#fff; border-radius:20px;
+    padding:96px 80px; display:grid; grid-template-columns:1.2fr 1fr; gap:56px; align-items:center;
+    position:relative; overflow:hidden;
+    box-shadow:0 30px 70px rgba(17,17,17,0.4);
   }
-  .cta h2{font-size:clamp(28px,3.4vw,40px); margin-bottom:16px; letter-spacing:-0.03em;}
-  .cta p{color:#B9B6AF; font-size:17px; margin-bottom:0; max-width:420px; letter-spacing:-0.1px; line-height:1.5;}
-  .cta form{display:flex; flex-direction:column; gap:14px;}
+  .cta::before{
+    content:""; position:absolute; right:-120px; top:-120px; width:380px; height:380px;
+    border-radius:50%; background:radial-gradient(circle, var(--accent) 0%, transparent 70%); opacity:0.35; z-index:1;
+  }
+  .cta-video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;}
+  .cta-overlay{position:absolute; inset:0; background:linear-gradient(120deg, rgba(17,17,17,0.93) 0%, rgba(17,17,17,0.8) 100%); z-index:0;}
+  .cta h2{font-size:clamp(32px,4.2vw,54px); margin-bottom:18px; letter-spacing:-0.03em; position:relative; z-index:2;}
+  .cta p{color:#B9B6AF; font-size:18px; margin-bottom:0; max-width:440px; letter-spacing:-0.1px; line-height:1.55; position:relative; z-index:2;}
+  .cta form{display:flex; flex-direction:column; gap:16px; position:relative; z-index:2;}
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .field-wrap{display:flex; flex-direction:column; gap:7px;}
+  .field-wrap label{font-size:13px; font-weight:600; color:#D8D3CC; letter-spacing:0.1px;}
   .cta input, .cta textarea{
-    background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.22);
-    border-radius:2px; padding:13px 16px; color:#fff; font-size:14px; font-family:inherit;
+    background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.22);
+    border-radius:10px; padding:14px 16px; color:#fff; font-size:14px; font-family:inherit;
+    transition:border-color .2s ease, background .2s ease;
   }
+  .cta input:focus, .cta textarea:focus{outline:none; border-color:var(--accent); background:rgba(255,255,255,0.1);}
   .cta input::placeholder, .cta textarea::placeholder{color:#8a877f;}
   .cta button{
-    background:#fff; color:var(--ink); border:none; padding:15px; border-radius:2px;
-    font-weight:700; font-size:14px; cursor:pointer; letter-spacing:0.3px;
+    background:var(--accent); color:#fff; border:none; padding:17px; border-radius:100px;
+    font-weight:700; font-size:15px; cursor:pointer; letter-spacing:0.3px;
+    transition:background .25s ease, transform .2s ease, box-shadow .25s ease;
   }
-  .cta button:hover{opacity:0.85;}
+  .cta button:hover{background:var(--accent-dark); box-shadow:0 10px 24px rgba(181,96,61,0.4); transform:translateY(-2px);}
+  .cta button:active{transform:scale(0.97);}
+
+  /* FAQ */
+  .faq-list{border-top:1px solid var(--line); margin-top:48px;}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-item summary{
+    list-style:none; cursor:pointer; padding:26px 0; font-size:17px; font-weight:600;
+    display:flex; justify-content:space-between; align-items:center; gap:16px;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary .plus{
+    width:24px; height:24px; position:relative; flex-shrink:0; transition:transform .25s ease;
+  }
+  .faq-item summary .plus::before, .faq-item summary .plus::after{
+    content:""; position:absolute; background:var(--ink); top:50%; left:50%;
+  }
+  .faq-item summary .plus::before{width:14px; height:2px; transform:translate(-50%,-50%);}
+  .faq-item summary .plus::after{width:2px; height:14px; transform:translate(-50%,-50%);}
+  .faq-item[open] summary .plus{transform:rotate(45deg);}
+  .faq-item p{font-size:15px; color:var(--muted); line-height:1.6; padding-bottom:26px; max-width:640px;}
 
   /* Footer */
   footer{border-top:1px solid var(--line); padding:56px 0 40px;}
@@ -226,10 +331,75 @@
   .footer-brand p{font-size:13px; color:var(--muted); max-width:220px;}
   .footer-col h5{font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:16px; color:var(--muted);}
   .footer-col a{display:block; font-size:14px; margin-bottom:10px; opacity:0.85;}
-  .footer-col a:hover{opacity:1;}
+  .footer-col a:hover{opacity:1; color:var(--accent);}
+  .footer-col a.has-icon{display:flex; align-items:center; gap:9px;}
+  .footer-col a.has-icon svg{width:15px; height:15px; color:var(--accent); flex-shrink:0;}
   .footer-bottom{
     margin-top:48px; padding-top:24px; border-top:1px solid var(--line);
     font-size:12px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  }
+
+  /* Newsletter popup */
+  .newsletter-overlay{
+    position:fixed; inset:0; background:rgba(17,17,17,0.55); backdrop-filter:blur(3px);
+    z-index:100; display:flex; align-items:center; justify-content:center; padding:24px;
+    opacity:0; visibility:hidden; transition:opacity .3s ease, visibility .3s ease;
+  }
+  .newsletter-overlay.open{opacity:1; visibility:visible;}
+  .newsletter-modal{
+    background:#fff; border-radius:16px; max-width:760px; width:100%; max-height:90vh;
+    display:grid; grid-template-columns:0.85fr 1.15fr; overflow:hidden; position:relative;
+    transform:scale(0.95) translateY(10px); transition:transform .3s ease;
+    box-shadow:0 40px 90px rgba(17,17,17,0.35);
+  }
+  .newsletter-overlay.open .newsletter-modal{transform:scale(1) translateY(0);}
+  .newsletter-image{background-size:cover; background-position:center;}
+  .newsletter-body{padding:44px 40px; display:flex; flex-direction:column; justify-content:center; overflow-y:auto;}
+  .newsletter-close{
+    position:absolute; top:16px; right:16px; width:32px; height:32px; border-radius:50%;
+    background:rgba(17,17,17,0.06); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; z-index:2; border:none; transition:background .2s ease;
+  }
+  .newsletter-close:hover{background:rgba(17,17,17,0.12);}
+  .newsletter-close svg{width:16px; height:16px; color:var(--ink);}
+  .newsletter-badge{
+    display:inline-flex; background:var(--accent-soft); color:var(--accent-dark);
+    font-size:11px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase;
+    padding:6px 14px; border-radius:100px; margin-bottom:18px; width:fit-content;
+  }
+  .newsletter-body h3{font-size:26px; letter-spacing:-0.02em; margin-bottom:12px; line-height:1.15;}
+  .newsletter-body p.nl-desc{font-size:15px; color:var(--muted); line-height:1.55; margin-bottom:22px;}
+  .newsletter-form{display:flex; flex-direction:column; gap:8px;}
+  .newsletter-form label{font-size:13px; font-weight:600;}
+  .newsletter-form input{
+    border:1px solid var(--line); border-radius:10px; padding:13px 16px;
+    font-size:14px; font-family:inherit; transition:border-color .2s ease;
+  }
+  .newsletter-form input:focus{outline:none; border-color:var(--accent);}
+  .newsletter-form .btn{margin-top:6px; align-self:flex-start;}
+  .newsletter-note{font-size:12px; color:var(--muted); margin-top:14px;}
+  .newsletter-status{font-size:13px; margin-top:10px; display:none; color:var(--accent-dark); font-weight:600;}
+  @media (max-width:640px){
+    .newsletter-modal{grid-template-columns:1fr;}
+    .newsletter-image{display:none;}
+    .newsletter-body{padding:36px 26px;}
+  }
+
+  /* Newsletter bottom bar — non-blocking, stays docked, page keeps scrolling */
+  .newsletter-bar{
+    position:fixed; left:50%; bottom:0; z-index:90; width:100%; max-width:760px;
+    transform:translate(-50%, 100%);
+    transition:transform .45s cubic-bezier(.16,.84,.44,1);
+    background:#fff; border-radius:16px 16px 0 0; overflow:hidden;
+    display:grid; grid-template-columns:0.85fr 1.15fr;
+    box-shadow:0 -20px 55px rgba(17,17,17,0.28);
+  }
+  .newsletter-bar.open{transform:translate(-50%, 0);}
+  .newsletter-bar .newsletter-body{padding:30px 36px; max-height:60vh;}
+  @media (max-width:640px){
+    .newsletter-bar{grid-template-columns:1fr; max-width:100%;}
+    .newsletter-bar .newsletter-image{display:none;}
+    .newsletter-bar .newsletter-body{padding:28px 24px;}
   }
 
   /* Scroll reveal */
@@ -240,18 +410,25 @@
   .reveal.in-view{opacity:1; transform:translateY(0);}
   @media (prefers-reduced-motion: reduce){
     .reveal{opacity:1; transform:none; transition:none;}
+    .badge-spin{animation:none;}
   }
 
   @media (max-width:900px){
     .nav-links{display:none;}
     .nav-cta{display:none;}
     .nav-toggle{display:flex;}
-    .principles{grid-template-columns:repeat(2,1fr);}
-    .principle{border-right:none; border-bottom:1px solid var(--line);}
+    .hero-top-row{flex-direction:column; gap:24px;}
+    .rotating-badge{align-self:flex-end;}
     .about-grid{grid-template-columns:1fr; gap:32px;}
-    .gallery-grid{grid-template-columns:repeat(2,1fr); grid-auto-rows:180px;}
+    .counters{grid-template-columns:repeat(2,1fr);}
+    .service-row{grid-template-columns:1fr; gap:12px;}
+    .service-tags{justify-self:start;}
+    .work-grid{grid-template-columns:1fr;}
+    .why-split{grid-template-columns:1fr;}
+    .why-grid{grid-template-columns:1fr;}
     .process-grid{grid-template-columns:repeat(2,1fr);}
     .cta{grid-template-columns:1fr; padding:40px;}
+    .field-row{grid-template-columns:1fr;}
     .footer-grid{grid-template-columns:1fr 1fr;}
   }
 </style>
@@ -264,19 +441,11 @@
       <img class="logo-full" src="assets/logo.svg" alt="Junta Blanca — Cocinas y Baños">
     </div>
     <div class="nav-links">
-      <a href="#top">Inicio</a>
-      <div class="nav-item">
-        <a href="#servicios" class="nav-drop-trigger">Servicios
-          <svg viewBox="0 0 12 8" fill="none"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <div class="nav-dropdown">
-          <a href="#servicios">Cocinas</a>
-          <a href="#servicios">Baños</a>
-        </div>
-      </div>
-      <a href="#galeria">Proyectos</a>
+      <a href="#top" class="is-active">Inicio</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#trabajo">Proyectos</a>
       <a href="#nosotros">Sobre nosotros</a>
-      <a href="#contacto">Contacto</a>
+      <a href="#faq">FAQ</a>
     </div>
     <a href="#contacto" class="nav-cta">Contacto</a>
     <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
@@ -289,12 +458,9 @@
   <div class="container">
     <a href="#top">Inicio</a>
     <a href="#servicios">Servicios</a>
-    <div class="mm-sub">
-      <a href="#servicios">Cocinas</a>
-      <a href="#servicios">Baños</a>
-    </div>
-    <a href="#galeria">Proyectos</a>
+    <a href="#trabajo">Proyectos</a>
     <a href="#nosotros">Sobre nosotros</a>
+    <a href="#faq">FAQ</a>
     <a href="#contacto">Contacto</a>
   </div>
 </div>
@@ -304,73 +470,283 @@
     <source src="assets/hero_video.mp4" type="video/mp4">
   </video>
   <div class="hero-content container">
-    <div class="eyebrow">Especialistas en cocinas y baños · Valencia</div>
+    <div class="hero-top-row">
+      <div class="eyebrow">Reformas de cocinas y baños · Valencia</div>
+      <div class="rotating-badge">
+        <svg class="badge-spin" viewBox="0 0 200 200">
+          <defs><path id="badgeCircle" d="M100,100 m-82,0 a82,82 0 1,1 164,0 a82,82 0 1,1 -164,0"/></defs>
+          <text font-size="12.5" letter-spacing="3" fill="currentColor" font-weight="600">
+            <textPath href="#badgeCircle">JUNTA BLANCA · EL DETALLE BIEN HECHO · </textPath>
+          </text>
+        </svg>
+        <div class="badge-center"><div class="cross white"><span class="v"></span><span class="h"></span></div></div>
+      </div>
+    </div>
     <h1>El detalle bien hecho.</h1>
     <p>Diseñamos y construimos cocinas y baños que funcionan, duran y te hacen la vida más fácil.</p>
     <div class="btn-row">
-      <a href="#contacto" class="btn btn-primary">Contacta con nosotros →</a>
-      <a href="#galeria" class="btn btn-ghost">Ver proyectos</a>
+      <a href="https://wa.me/message/D3ZDEIMICVM4B1" target="_blank" rel="noopener" class="btn btn-primary">
+        <span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.1-5.4a8.5 8.5 0 1 1 16.9-3.6z"/><path d="M8.5 10.3c0 3.1 2.6 5.7 5.7 5.7"/></svg></span>
+        <span class="btn-label"><span>Escríbenos por WhatsApp</span><span class="dup">Escríbenos por WhatsApp</span></span>
+      </a>
+      <a href="#trabajo" class="btn btn-ghost">
+        <span class="btn-label"><span>Ver proyectos</span><span class="dup">Ver proyectos</span></span>
+      </a>
     </div>
+    <div class="scroll-cue"><div class="line"></div> Scroll</div>
   </div>
 </section>
-
-<div class="principles container" style="padding-left:0; padding-right:0; max-width:1160px;">
-  <div class="principles" style="border-left:1px solid var(--line);" data-reveal-group>
-    <div class="principle reveal">
-      <div class="cross"><span class="v"></span><span class="h"></span></div>
-      <h4>Precisión</h4>
-      <p>Cuidado en cada detalle.</p>
-    </div>
-    <div class="principle reveal">
-      <div class="cross"><span class="v"></span><span class="h"></span></div>
-      <h4>Sencillez</h4>
-      <p>Menos es más. Solo lo esencial.</p>
-    </div>
-    <div class="principle reveal">
-      <div class="cross"><span class="v"></span><span class="h"></span></div>
-      <h4>Orden</h4>
-      <p>Método, planificación y limpieza.</p>
-    </div>
-    <div class="principle reveal">
-      <div class="cross"><span class="v"></span><span class="h"></span></div>
-      <h4>Durabilidad</h4>
-      <p>Materiales y soluciones que perduran.</p>
-    </div>
-  </div>
-</div>
 
 <section id="nosotros">
-  <div class="container about-grid" data-reveal-group>
-    <div class="reveal">
-      <div class="section-eyebrow">Diseño · Ejecución · Acabados</div>
-      <h2>Espacios que funcionan <span class="soft">y perduran.</span></h2>
-      <p>En Junta Blanca transformamos espacios cotidianos en lugares extraordinarios. Combinamos diseño, funcionalidad y materiales de alta calidad para crear cocinas y baños que mejoran tu día a día.</p>
-      <a href="#galeria" class="link-arrow">Conócenos →</a>
+  <div class="container">
+    <div class="about-grid">
+      <div class="reveal">
+        <div class="section-eyebrow">(Sobre nosotros)</div>
+        <h2>Creemos que las reformas merecen un equipo que de verdad se implique.</h2>
+        <a href="https://wa.me/message/D3ZDEIMICVM4B1" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="margin-top:20px;"><span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.1-5.4a8.5 8.5 0 1 1 16.9-3.6z"/><path d="M8.5 10.3c0 3.1 2.6 5.7 5.7 5.7"/></svg></span><span class="btn-label"><span>Cuéntanos tu proyecto</span><span class="dup">Cuéntanos tu proyecto</span></span></a>
+        <div class="about-image">
+          <img src="assets/about_ejecucion.jpg" alt="Detalle de ejecución artesanal en madera de roble">
+        </div>
+      </div>
+      <div class="reveal">
+        <p class="lead">Nos presentamos con el equipo, el proceso y los resultados que de verdad transforman tu cocina o tu baño — sin sorpresas, sin subcontratas invisibles.</p>
+        <p class="sub">Ya estés reformando una cocina o un baño completo, nosotros nos encargamos de todo: diseño 3D, materiales, obra y postventa, para que tú solo tengas que decidir el resultado final.</p>
+        <div class="counters">
+          <div class="counter-item">
+            <div class="counter-num"><span class="counter" data-target="12">0</span><span class="accent-text">+</span></div>
+            <div class="counter-label">Años de experiencia</div>
+          </div>
+          <div class="counter-item">
+            <div class="counter-num"><span class="counter" data-target="300">0</span><span class="accent-text">+</span></div>
+            <div class="counter-label">Reformas entregadas</div>
+          </div>
+          <div class="counter-item">
+            <div class="counter-num"><span class="counter" data-target="4.9" data-decimals="1">0</span><span class="accent-text">★</span></div>
+            <div class="counter-label">Valoración media</div>
+          </div>
+          <div class="counter-item">
+            <div class="counter-num"><span class="counter" data-target="15">0</span><span class="accent-text">d</span></div>
+            <div class="counter-label">Plazo medio de obra</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <img class="reveal" src="assets/hero_cocina.jpg" alt="Cocina reformada Junta Blanca">
   </div>
 </section>
 
-<div class="gallery-wrap">
-  <div class="container" style="padding:110px 32px;">
-    <div class="gallery-head reveal" id="galeria">
+<section id="servicios">
+  <div class="container">
+    <div class="section-head-row">
       <div>
-        <div class="section-eyebrow">Proyectos</div>
-        <h2>Cada proyecto, <span class="soft">una historia bien hecha.</span></h2>
+        <div class="section-eyebrow reveal">Qué hacemos</div>
+        <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:560px;">El Motor de Reformas de Junta Blanca.</h2>
+      </div>
+      <a href="https://wa.me/message/D3ZDEIMICVM4B1" target="_blank" rel="noopener" class="btn btn-primary btn-sm reveal"><span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.1-5.4a8.5 8.5 0 1 1 16.9-3.6z"/><path d="M8.5 10.3c0 3.1 2.6 5.7 5.7 5.7"/></svg></span><span class="btn-label"><span>Pregúntanos sin compromiso</span><span class="dup">Pregúntanos sin compromiso</span></span></a>
+    </div>
+    <div class="services-list" data-reveal-group>
+      <div class="service-row reveal">
+        <div class="service-num">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="7" rx="1"/><circle cx="7" cy="6.5" r="1"/><circle cx="11" cy="6.5" r="1"/><path d="M3 14h18M3 14v6a1 1 0 0 0 1 1h4v-4h8v4h4a1 1 0 0 0 1-1v-6"/></svg>
+          01
+        </div>
+        <div class="service-body">
+          <h3>Reformas de cocina</h3>
+          <p>Diseño funcional, electrodomésticos integrados y encimeras de alta resistencia adaptadas a tu espacio.</p>
+        </div>
+        <div class="service-tags">
+          <span class="tag">Diseño 3D</span>
+          <span class="tag">Encimeras</span>
+          <span class="tag">Electrodomésticos</span>
+        </div>
+      </div>
+      <div class="service-row reveal">
+        <div class="service-num">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-3z"/><path d="M4 12V6a2 2 0 0 1 3-1.7"/><path d="M9 19v2M15 19v2"/><path d="M17 8c1-1 1-3-.5-3.5"/></svg>
+          02
+        </div>
+        <div class="service-body">
+          <h3>Reformas de baño</h3>
+          <p>Duchas a ras de suelo, mamparas a medida y materiales antihumedad con acabados de spa.</p>
+        </div>
+        <div class="service-tags">
+          <span class="tag">Impermeabilización</span>
+          <span class="tag">Griferías</span>
+          <span class="tag">Mamparas</span>
+        </div>
+      </div>
+      <div class="service-row reveal">
+        <div class="service-num">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l6-1.5L20.5 8.5a1.5 1.5 0 0 0 0-2.1l-1.9-1.9a1.5 1.5 0 0 0-2.1 0L5.5 15.5 4 21z"/><path d="M14 6l4 4"/></svg>
+          03
+        </div>
+        <div class="service-body">
+          <h3>Diseño e interiorismo</h3>
+          <p>Proyecto en 3D antes de mover un solo azulejo, para que veas el resultado antes de decidir.</p>
+        </div>
+        <div class="service-tags">
+          <span class="tag">Render 3D</span>
+          <span class="tag">Planos</span>
+        </div>
+      </div>
+      <div class="service-row reveal">
+        <div class="service-num">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 18l9 5 9-5"/></svg>
+          04
+        </div>
+        <div class="service-body">
+          <h3>Materiales y acabados</h3>
+          <p>Selección de piedra natural, madera de roble y grifería premium para un resultado duradero.</p>
+        </div>
+        <div class="service-tags">
+          <span class="tag">Piedra natural</span>
+          <span class="tag">Roble</span>
+          <span class="tag">Latón</span>
+        </div>
       </div>
     </div>
-    <div class="gallery-grid" data-reveal-group>
-      <figure class="g-span2 reveal"><img src="assets/hero_cocina.jpg" alt="Cocina blanca y roble"><figcaption>Cocina en Valencia · Blanco y roble</figcaption></figure>
-      <figure class="reveal"><img src="assets/servicio_bano.jpg" alt="Baño beige minimalista"><figcaption>Baño en El Saler</figcaption></figure>
-      <figure class="reveal"><img src="assets/galeria_materiales.jpg" alt="Materiales seleccionados"></figure>
-      <div class="g-dark reveal"><p>Menos es más. Lo esencial, bien hecho.</p><span>Junta Blanca</span></div>
-      <figure class="reveal"><img src="assets/galeria_bano2.jpg" alt="Ducha detalle negro mate"><figcaption>Baño en Ruzafa</figcaption></figure>
-      <figure class="g-span2 reveal"><img src="assets/galeria_cocina2.jpg" alt="Isla de cocina roble y blanco"><figcaption>Cocina en Patacona · Isla central</figcaption></figure>
+  </div>
+</section>
+
+<div class="work-wrap" id="trabajo">
+  <div class="container" style="padding:110px 32px;">
+    <div class="section-head-row">
+      <div>
+        <div class="section-eyebrow reveal">Nuestro trabajo</div>
+        <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:560px;">Cada proyecto, <span class="soft">una historia bien hecha.</span></h2>
+      </div>
+      <a href="https://wa.me/message/D3ZDEIMICVM4B1" target="_blank" rel="noopener" class="btn btn-primary btn-sm reveal"><span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.1-5.4a8.5 8.5 0 1 1 16.9-3.6z"/><path d="M8.5 10.3c0 3.1 2.6 5.7 5.7 5.7"/></svg></span><span class="btn-label"><span>¿Dudas? Escríbenos</span><span class="dup">¿Dudas? Escríbenos</span></span></a>
+    </div>
+    <div class="work-grid" data-reveal-group>
+      <div class="work-card reveal">
+        <div class="wc-media"><img src="assets/hero_cocina.jpg" alt="Cocina blanca y roble en Valencia"></div>
+        <div class="wc-body">
+          <p>Cocina en Valencia — reforma completa en 15 días, sin sorpresas de presupuesto.</p>
+          <div class="wc-tags"><span>Diseño</span><span>Obra</span><span>Acabados</span></div>
+        </div>
+      </div>
+      <div class="work-card reveal">
+        <div class="wc-media"><img src="assets/servicio_bano.jpg" alt="Baño beige minimalista en El Saler"></div>
+        <div class="wc-body">
+          <p>Baño en El Saler — de bañera antigua a ducha a ras de suelo en 10 días.</p>
+          <div class="wc-tags"><span>Impermeabilización</span><span>Griferías</span></div>
+        </div>
+      </div>
+      <div class="work-card reveal">
+        <div class="wc-media"><img src="assets/galeria_cocina2.jpg" alt="Isla de cocina roble y blanco en Patacona"></div>
+        <div class="wc-body">
+          <p>Cocina en Patacona — isla central a medida y electrodomésticos integrados.</p>
+          <div class="wc-tags"><span>Diseño 3D</span><span>Encimeras</span></div>
+        </div>
+      </div>
+      <div class="work-card reveal">
+        <div class="wc-media"><img src="assets/galeria_bano2.jpg" alt="Baño con ducha en Ruzafa"></div>
+        <div class="wc-body">
+          <p>Baño en Ruzafa — mampara a medida y acabados en piedra natural.</p>
+          <div class="wc-tags"><span>Mamparas</span><span>Piedra natural</span></div>
+        </div>
+      </div>
+      <div class="work-card reveal">
+        <div class="wc-media"><img src="assets/trabajo_cocina3.jpg" alt="Cocina verde y latón en Benimaclet"></div>
+        <div class="wc-body">
+          <p>Cocina en Benimaclet — cabinetes verde mate y grifería en latón.</p>
+          <div class="wc-tags"><span>Materiales</span><span>Grifería</span></div>
+        </div>
+      </div>
+      <div class="work-card reveal">
+        <div class="wc-media"><img src="assets/trabajo_bano3.jpg" alt="Baño con zellige en Campanar"></div>
+        <div class="wc-body">
+          <p>Baño en Campanar — ducha a ras de suelo con zellige artesanal.</p>
+          <div class="wc-tags"><span>Zellige</span><span>Ducha a ras de suelo</span></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<section id="servicios">
+<section>
+  <div class="container">
+    <div class="section-eyebrow reveal">Testimonios</div>
+    <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em;">Lo que dicen de nosotros.</h2>
+    <div class="testi-wrap reveal">
+      <div class="testi-track" id="testi-track">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"Entendieron exactamente lo que queríamos para la cocina y lo entregaron en el plazo acordado, sin sustos en el presupuesto."</p>
+          <div class="testi-name">Cliente — Reforma de cocina</div>
+          <div class="testi-role">Valencia</div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"El equipo vino a la obra varias veces, no solo mandaron un PDF y desaparecieron. Se nota que les importa el resultado."</p>
+          <div class="testi-name">Cliente — Reforma de baño</div>
+          <div class="testi-role">El Saler</div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"El render 3D fue clave para decidirnos por los materiales. El resultado final fue prácticamente idéntico a la propuesta."</p>
+          <div class="testi-name">Cliente — Diseño e interiorismo</div>
+          <div class="testi-role">Patacona</div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"Cuidan cada detalle, desde la selección de la grifería hasta el remate final del alicatado. Se nota la diferencia."</p>
+          <div class="testi-name">Cliente — Reforma integral</div>
+          <div class="testi-role">Ruzafa</div>
+        </div>
+      </div>
+      <div class="testi-nav">
+        <button id="testi-prev" aria-label="Anterior">←</button>
+        <button id="testi-next" aria-label="Siguiente">→</button>
+      </div>
+      <p class="testi-note">* Testimonios de ejemplo — sustituir por reseñas reales antes de publicar.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head-row">
+      <div>
+        <div class="section-eyebrow reveal">Por qué elegirnos</div>
+        <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:600px;">Por qué las familias de Valencia eligen Junta Blanca.</h2>
+      </div>
+      <a href="https://wa.me/message/D3ZDEIMICVM4B1" target="_blank" rel="noopener" class="btn btn-primary btn-sm reveal"><span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.1-5.4a8.5 8.5 0 1 1 16.9-3.6z"/><path d="M8.5 10.3c0 3.1 2.6 5.7 5.7 5.7"/></svg></span><span class="btn-label"><span>Hablamos cuando quieras</span><span class="dup">Hablamos cuando quieras</span></span></a>
+    </div>
+    <div class="why-split">
+      <div class="why-split-image reveal">
+        <img src="assets/why_detalle.jpg" alt="Detalle de medición y acabados en una reforma">
+      </div>
+      <div class="why-grid" data-reveal-group>
+        <div class="why-item reveal">
+          <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg></div>
+          <span class="num">01</span>
+          <h4>Ejecución en tu vivienda</h4>
+          <p>No mandamos un PDF y desaparecemos. Venimos a la obra regularmente a reunirnos, planificar y trabajar contigo.</p>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.6" fill="currentColor"/></svg></div>
+          <span class="num">02</span>
+          <h4>Solo cocinas y baños</h4>
+          <p>No somos generalistas. Cada proceso, cada material y cada proveedor está pensado específicamente para estos espacios.</p>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8" r="3"/><path d="M2 20c0-3.3 2.9-6 6.5-6S15 16.7 15 20"/><circle cx="17" cy="9" r="2.4"/><path d="M22 20c0-2.6-1.9-4.8-4.5-5.5"/></svg></div>
+          <span class="num">03</span>
+          <h4>Equipo propio en Valencia</h4>
+          <p>Sin subcontratas invisibles ni intermediarios. El mismo equipo te acompaña de principio a fin.</p>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 3v6c0 4.8-3 8.3-7 10-4-1.7-7-5.2-7-10V5l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <span class="num">04</span>
+          <h4>El detalle bien hecho</h4>
+          <p>Medimos el éxito en acabados, plazos y tranquilidad — no solo en el precio final del presupuesto.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
   <div class="container">
     <div class="section-eyebrow reveal">Nuestro proceso</div>
     <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em;">Así trabajamos.</h2>
@@ -387,20 +763,81 @@
 <section id="contacto">
   <div class="container">
     <div class="cta reveal">
+      <video class="cta-video" autoplay muted loop playsinline poster="assets/about_ejecucion.jpg">
+        <source src="assets/cta_video.mp4" type="video/mp4">
+      </video>
+      <div class="cta-overlay"></div>
       <div>
-        <h2>¿Tienes un proyecto?<br><span class="soft">Hablemos de tu próxima reforma.</span></h2>
+        <h2>¿Lista para reformar?<br><span class="soft">Hablemos de tu próxima cocina o baño.</span></h2>
         <p>Cuéntanos qué espacio quieres reformar y te contactamos en menos de 24h con una propuesta inicial.</p>
+        <a href="https://wa.me/message/D3ZDEIMICVM4B1" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="margin-top:24px;">
+          <span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.1-5.4a8.5 8.5 0 1 1 16.9-3.6z"/><path d="M8.5 10.3c0 3.1 2.6 5.7 5.7 5.7"/></svg></span>
+          <span class="btn-label"><span>¿Prefieres WhatsApp? Escríbenos</span><span class="dup">¿Prefieres WhatsApp? Escríbenos</span></span>
+        </a>
       </div>
       <form name="contacto" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="contact-form">
         <input type="hidden" name="form-name" value="contacto">
         <p hidden><label>No rellenar: <input name="bot-field"></label></p>
-        <input type="text" name="nombre" placeholder="Nombre" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="text" name="telefono" placeholder="Teléfono">
-        <textarea rows="3" name="mensaje" placeholder="Cuéntanos tu proyecto"></textarea>
+        <div class="field-row">
+          <div class="field-wrap">
+            <label for="cf-nombre">Nombre</label>
+            <input id="cf-nombre" type="text" name="nombre" placeholder="Tu nombre" required>
+          </div>
+          <div class="field-wrap">
+            <label for="cf-apellidos">Apellidos</label>
+            <input id="cf-apellidos" type="text" name="apellidos" placeholder="Tus apellidos">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field-wrap">
+            <label for="cf-telefono">Teléfono</label>
+            <input id="cf-telefono" type="tel" name="telefono" placeholder="Tu teléfono" required>
+          </div>
+          <div class="field-wrap">
+            <label for="cf-email">Email</label>
+            <input id="cf-email" type="email" name="email" placeholder="Tu email" required>
+          </div>
+        </div>
+        <div class="field-wrap">
+          <label for="cf-mensaje">Mensaje</label>
+          <textarea id="cf-mensaje" rows="3" name="mensaje" placeholder="Cuéntanos tu proyecto"></textarea>
+        </div>
         <button type="submit">Enviar solicitud</button>
         <p id="contact-status" style="font-size:13px; color:#B9B6AF; display:none;"></p>
       </form>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="container">
+    <div class="section-eyebrow reveal">FAQ</div>
+    <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em;">Preguntas frecuentes.</h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>¿Con qué tipo de proyectos trabajáis? <span class="plus"></span></summary>
+        <p>Reformas integrales de cocinas y baños en viviendas particulares, en Valencia y alrededores.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿En qué os diferenciáis de un reformista suelto? <span class="plus"></span></summary>
+        <p>Tienes un equipo completo — diseño 3D, interiorismo, dirección de obra y postventa — en vez de una sola persona intentando hacerlo todo.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Qué incluye el servicio? <span class="plus"></span></summary>
+        <p>Diseño 3D, selección de materiales, gestión de instalaciones, alicatado y seguimiento por fases hasta la entrega final.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Cuánto tarda una reforma? <span class="plus"></span></summary>
+        <p>La mayoría de proyectos se completan en 10-20 días de obra, dependiendo del alcance y el estado previo del espacio.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Trabajáis fuera de Valencia? <span class="plus"></span></summary>
+        <p>Trabajamos principalmente en Valencia y alrededores — consúltanos disponibilidad si tu proyecto está en otra zona.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Y si ya tengo un presupuesto de otra empresa? <span class="plus"></span></summary>
+        <p>Muchos clientes llegan porque el proyecto anterior no avanzaba. Revisamos lo que ya tienes y proponemos mejoras, o asumimos el proyecto completo.</p>
+      </details>
     </div>
   </div>
 </section>
@@ -418,21 +855,21 @@
         <h5>Enlaces</h5>
         <a href="#servicios">Cocinas</a>
         <a href="#servicios">Baños</a>
-        <a href="#galeria">Proyectos</a>
+        <a href="#trabajo">Proyectos</a>
         <a href="#nosotros">Sobre nosotros</a>
       </div>
       <div class="footer-col">
         <h5>Información</h5>
-        <a href="#">Equipo</a>
+        <a href="#faq">FAQ</a>
         <a href="#">Materiales</a>
         <a href="#">Garantía</a>
         <a href="#">Política de privacidad</a>
       </div>
       <div class="footer-col">
         <h5>Contacto</h5>
-        <a href="mailto:hola@juntablanca.com">hola@juntablanca.com</a>
-        <a href="tel:+34623004942">+34 623 00 49 42</a>
-        <a href="#">Valencia, España</a>
+        <a href="mailto:hola@juntablanca.com" class="has-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>hola@juntablanca.com</a>
+        <a href="tel:+34623004942" class="has-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v4a2 2 0 0 1-2 2C9.5 21 3 14.5 3 6a2 2 0 0 1 1-2z"/></svg>+34 623 00 49 42</a>
+        <a href="#" class="has-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>Valencia, España</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -442,43 +879,124 @@
   </div>
 </footer>
 
+<div class="newsletter-overlay" id="newsletter-overlay">
+  <div class="newsletter-modal">
+    <button class="newsletter-close" id="newsletter-close" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="newsletter-image" style="background-image:url('assets/newsletter_modal.jpg');"></div>
+    <div class="newsletter-body">
+      <span class="newsletter-badge">Newsletter</span>
+      <h3>Únete a la comunidad Junta Blanca</h3>
+      <p class="nl-desc">Antes y después de proyectos reales, ideas de diseño y consejos para tu próxima reforma — directo a tu email, sin spam.</p>
+      <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="nl-bot-field" id="newsletter-form" class="newsletter-form">
+        <input type="hidden" name="form-name" value="newsletter">
+        <p hidden><label>No rellenar: <input name="nl-bot-field"></label></p>
+        <label for="nl-email">Tu email</label>
+        <input id="nl-email" type="email" name="email" placeholder="tú@email.com" required>
+        <button type="submit" class="btn btn-primary">
+          <span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+          <span class="btn-label"><span>Suscribirme, es gratis</span><span class="dup">Suscribirme, es gratis</span></span>
+        </button>
+        <p class="newsletter-status" id="newsletter-status"></p>
+      </form>
+      <p class="newsletter-note">Puedes darte de baja cuando quieras.</p>
+    </div>
+  </div>
+</div>
+
+<div class="newsletter-bar" id="newsletter-bar">
+  <button class="newsletter-close" id="newsletter-bar-close" aria-label="Cerrar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <div class="newsletter-image" style="background-image:url('assets/newsletter_bar.jpg');"></div>
+  <div class="newsletter-body">
+    <span class="newsletter-badge">Newsletter</span>
+    <h3>Únete a la comunidad Junta Blanca</h3>
+    <p class="nl-desc">Antes y después de proyectos reales, ideas de diseño y consejos para tu próxima reforma — directo a tu email, sin spam.</p>
+    <form name="newsletter-bar" method="POST" data-netlify="true" netlify-honeypot="nlb-bot-field" id="newsletter-bar-form" class="newsletter-form">
+      <input type="hidden" name="form-name" value="newsletter-bar">
+      <p hidden><label>No rellenar: <input name="nlb-bot-field"></label></p>
+      <label for="nlb-email">Tu email</label>
+      <input id="nlb-email" type="email" name="email" placeholder="tú@email.com" required>
+      <button type="submit" class="btn btn-primary">
+        <span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+        <span class="btn-label"><span>Suscribirme, es gratis</span><span class="dup">Suscribirme, es gratis</span></span>
+      </button>
+      <p class="newsletter-status" id="newsletter-bar-status"></p>
+    </form>
+    <p class="newsletter-note">Puedes darte de baja cuando quieras.</p>
+  </div>
+</div>
+
 <script>
+  (function () {
+    const toggle = document.querySelector('.nav-toggle');
+    const menu = document.getElementById('mobile-menu');
+    function closeMenu() {
+      menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+    toggle.addEventListener('click', function () {
+      const isOpen = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeMenu); });
+    window.addEventListener('resize', function () { if (window.innerWidth > 900) closeMenu(); });
+  })();
+
   (function () {
     const heroEl = document.querySelector('.hero');
     const heroMedia = document.querySelectorAll('.hero video, .hero img');
     const maxOffset = 60;
     let ticking = false;
-
     function updateParallax() {
       const rect = heroEl.getBoundingClientRect();
       let progress = -rect.top / rect.height;
       progress = Math.max(0, Math.min(1, progress));
       const offset = progress * maxOffset;
-      heroMedia.forEach(function (el) {
-        el.style.transform = 'translateY(' + offset + 'px)';
-      });
+      heroMedia.forEach(function (el) { el.style.transform = 'translateY(' + offset + 'px)'; });
       ticking = false;
     }
-
     window.addEventListener('scroll', function () {
-      if (!ticking) {
-        requestAnimationFrame(updateParallax);
-        ticking = true;
-      }
+      if (!ticking) { requestAnimationFrame(updateParallax); ticking = true; }
     }, { passive: true });
-
     updateParallax();
   })();
 
   (function () {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const items = Array.from(document.querySelectorAll('.about-image img, .why-split-image img, .work-card .wc-media img'));
+    if (!items.length) return;
+    const factor = 0.12;
+    const maxOffset = 40;
+    let ticking2 = false;
+    function updateImageParallax() {
+      const vh = window.innerHeight;
+      items.forEach(function (img) {
+        const rect = img.parentElement.getBoundingClientRect();
+        if (rect.bottom < -200 || rect.top > vh + 200) return;
+        const centerOffset = (rect.top + rect.height / 2) - vh / 2;
+        const translate = Math.max(-maxOffset, Math.min(maxOffset, centerOffset * factor));
+        img.style.transform = 'translateY(' + translate.toFixed(1) + 'px)';
+      });
+      ticking2 = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking2) { requestAnimationFrame(updateImageParallax); ticking2 = true; }
+    }, { passive: true });
+    updateImageParallax();
+  })();
 
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     document.querySelectorAll('[data-reveal-group]').forEach(function (group) {
       group.querySelectorAll(':scope > .reveal').forEach(function (el, i) {
         el.style.transitionDelay = (i * 90) + 'ms';
       });
     });
-
     const observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
@@ -487,55 +1005,160 @@
         }
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
-
-    document.querySelectorAll('.reveal').forEach(function (el) {
-      observer.observe(el);
-    });
+    document.querySelectorAll('.reveal').forEach(function (el) { observer.observe(el); });
   })();
 
   (function () {
-    const toggle = document.querySelector('.nav-toggle');
-    const menu = document.getElementById('mobile-menu');
+    const counters = document.querySelectorAll('.counter');
+    if (!counters.length) return;
+    function animateCounter(el) {
+      const target = parseFloat(el.getAttribute('data-target'));
+      const decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+      const duration = 1400;
+      const start = performance.now();
+      function tick(now) {
+        const p = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const value = target * eased;
+        el.textContent = decimals ? value.toFixed(decimals) : Math.round(value);
+        if (p < 1) requestAnimationFrame(tick);
+        else el.textContent = decimals ? target.toFixed(decimals) : target;
+      }
+      requestAnimationFrame(tick);
+    }
+    const co = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          co.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    counters.forEach(function (el) { co.observe(el); });
+  })();
 
-    function closeMenu() {
-      menu.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
+  (function () {
+    const track = document.getElementById('testi-track');
+    const prev = document.getElementById('testi-prev');
+    const next = document.getElementById('testi-next');
+    if (!track) return;
+    function scrollByCard(dir) {
+      const card = track.querySelector('.testi-card');
+      const gap = 24;
+      const amount = (card ? card.offsetWidth : 400) + gap;
+      track.scrollBy({ left: dir * amount, behavior: 'smooth' });
+    }
+    prev.addEventListener('click', function () { scrollByCard(-1); });
+    next.addEventListener('click', function () { scrollByCard(1); });
+  })();
+
+  (function () {
+    const overlay = document.getElementById('newsletter-overlay');
+    const bar = document.getElementById('newsletter-bar');
+    if (!overlay || !bar) return;
+
+    function isSubscribed() {
+      try { return localStorage.getItem('jb_nl_subscribed') === '1'; } catch (e) { return false; }
+    }
+    function setSubscribed() {
+      try { localStorage.setItem('jb_nl_subscribed', '1'); } catch (e) {}
+    }
+    function shownCount() {
+      try { return parseInt(sessionStorage.getItem('jb_nl_shown') || '0', 10); } catch (e) { return 0; }
+    }
+    function markShown() {
+      try { sessionStorage.setItem('jb_nl_shown', String(shownCount() + 1)); } catch (e) {}
+    }
+    function anyOpen() {
+      return overlay.classList.contains('open') || bar.classList.contains('open');
+    }
+
+    // Trigger 1 — centered modal, blocks the page, shortly after entering
+    function openModal() {
+      if (isSubscribed() || anyOpen() || shownCount() >= 2) return;
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      markShown();
+    }
+    function closeModal() {
+      overlay.classList.remove('open');
       document.body.style.overflow = '';
     }
 
-    toggle.addEventListener('click', function () {
-      const isOpen = menu.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-    });
+    // Trigger 2 — bottom bar, docked, does NOT block scrolling
+    function openBar() {
+      if (isSubscribed() || anyOpen() || shownCount() >= 2) return;
+      bar.classList.add('open');
+      markShown();
+    }
+    function closeBar() {
+      bar.classList.remove('open');
+    }
 
-    menu.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', closeMenu);
-    });
+    document.getElementById('newsletter-close').addEventListener('click', closeModal);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+    document.getElementById('newsletter-bar-close').addEventListener('click', closeBar);
 
-    window.addEventListener('resize', function () {
-      if (window.innerWidth > 900) closeMenu();
-    });
+    if (!isSubscribed() && shownCount() < 1) {
+      setTimeout(openModal, 3500);
+    }
+
+    const trabajoSection = document.getElementById('trabajo');
+    if (trabajoSection && !isSubscribed()) {
+      const trabajoObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            openBar();
+            trabajoObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      trabajoObserver.observe(trabajoSection);
+    }
+
+    function wireForm(formId, statusId, onSuccess) {
+      const form = document.getElementById(formId);
+      const status = document.getElementById(statusId);
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const data = new URLSearchParams(new FormData(form)).toString();
+        fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: data })
+          .then(function () {
+            setSubscribed();
+            status.textContent = '¡Gracias! Ya formas parte de la comunidad.';
+            status.style.display = 'block';
+            setTimeout(onSuccess, 1800);
+          })
+          .catch(function () {
+            status.textContent = 'Ha ocurrido un error. Inténtalo de nuevo.';
+            status.style.display = 'block';
+          });
+      });
+    }
+    wireForm('newsletter-form', 'newsletter-status', closeModal);
+    wireForm('newsletter-bar-form', 'newsletter-bar-status', closeBar);
   })();
 
-  const form = document.getElementById('contact-form');
-  const status = document.getElementById('contact-status');
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    const data = new URLSearchParams(new FormData(form)).toString();
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: data
-    }).then(() => {
-      form.reset();
-      status.textContent = 'Gracias, hemos recibido tu solicitud. Te contactamos pronto.';
-      status.style.display = 'block';
-    }).catch(() => {
-      status.textContent = 'Ha ocurrido un error. Escríbenos a hola@juntablanca.com.';
-      status.style.display = 'block';
+  (function () {
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('contact-status');
+    if (!form) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const data = new URLSearchParams(new FormData(form)).toString();
+      fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: data })
+        .then(function () {
+          form.reset();
+          status.textContent = 'Gracias, hemos recibido tu solicitud. Te contactamos pronto.';
+          status.style.display = 'block';
+        })
+        .catch(function () {
+          status.textContent = 'Ha ocurrido un error. Escríbenos a hola@juntablanca.com.';
+          status.style.display = 'block';
+        });
     });
-  });
+  })();
 </script>
+
 </body>
 </html>
