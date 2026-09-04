@@ -47,9 +47,6 @@
     height:84px; gap:16px;
   }
   .brand{display:flex; align-items:center;}
-  nav.container > .brand{
-    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-  }
   .brand img.logo-full{height:56px; width:auto; display:block;}
   .footer-brand .brand img.logo-full{height:60px;}
   .nav-links{display:flex; align-items:center; gap:28px; font-size:14px; font-weight:500; white-space:nowrap;}
@@ -69,12 +66,39 @@
   .nav-dropdown a{display:block; padding:8px 10px; border-radius:3px; opacity:0.85; font-size:13px;}
   .nav-dropdown a:hover{opacity:1; background:var(--bg);}
   .nav-cta{
-    justify-self:end;
     border:1px solid var(--ink); padding:11px 22px;
     font-size:13px; font-weight:600; letter-spacing:0.3px;
     transition:background .15s ease, color .15s ease;
   }
   .nav-cta:hover{background:var(--ink); color:#fff;}
+
+  /* Mobile nav toggle */
+  .nav-toggle{
+    display:none; flex-direction:column; justify-content:center; gap:5px;
+    width:40px; height:40px; background:none; border:none; cursor:pointer; padding:0;
+  }
+  .nav-toggle span{
+    display:block; width:22px; height:2px; background:var(--ink); margin:0 auto;
+    transition:transform .25s ease, opacity .25s ease;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .mobile-menu{
+    position:fixed; top:84px; left:0; right:0; bottom:0; z-index:49;
+    background:var(--bg); overflow-y:auto;
+    transform:translateY(-12px); opacity:0; visibility:hidden;
+    transition:transform .25s ease, opacity .25s ease, visibility .25s;
+  }
+  .mobile-menu.open{transform:translateY(0); opacity:1; visibility:visible;}
+  .mobile-menu .container{display:flex; flex-direction:column; padding:16px 32px 48px;}
+  .mobile-menu > .container > a{
+    padding:18px 0; border-bottom:1px solid var(--line);
+    font-size:20px; font-weight:600;
+  }
+  .mobile-menu .mm-sub{display:flex; flex-direction:column; padding-left:16px; border-bottom:1px solid var(--line);}
+  .mobile-menu .mm-sub a{padding:12px 0; font-size:15px; font-weight:500; color:var(--muted);}
 
   /* Hero */
   .hero{
@@ -218,6 +242,8 @@
 
   @media (max-width:900px){
     .nav-links{display:none;}
+    .nav-cta{display:none;}
+    .nav-toggle{display:flex;}
     .principles{grid-template-columns:repeat(2,1fr);}
     .principle{border-right:none; border-bottom:1px solid var(--line);}
     .about-grid{grid-template-columns:1fr; gap:32px;}
@@ -232,6 +258,9 @@
 
 <header id="top">
   <nav class="container">
+    <div class="brand">
+      <img class="logo-full" src="assets/logo.svg" alt="Junta Blanca — Cocinas y Baños">
+    </div>
     <div class="nav-links">
       <a href="#top">Inicio</a>
       <div class="nav-item">
@@ -247,12 +276,26 @@
       <a href="#nosotros">Sobre nosotros</a>
       <a href="#contacto">Contacto</a>
     </div>
-    <div class="brand">
-      <img class="logo-full" src="assets/logo.svg" alt="Junta Blanca — Cocinas y Baños">
-    </div>
     <a href="#contacto" class="nav-cta">Contacto</a>
+    <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 </header>
+
+<div class="mobile-menu" id="mobile-menu">
+  <div class="container">
+    <a href="#top">Inicio</a>
+    <a href="#servicios">Servicios</a>
+    <div class="mm-sub">
+      <a href="#servicios">Cocinas</a>
+      <a href="#servicios">Baños</a>
+    </div>
+    <a href="#galeria">Proyectos</a>
+    <a href="#nosotros">Sobre nosotros</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+</div>
 
 <section class="hero">
   <video id="hero-media" autoplay muted loop playsinline poster="assets/hero_cocina.jpg">
@@ -445,6 +488,31 @@
 
     document.querySelectorAll('.reveal').forEach(function (el) {
       observer.observe(el);
+    });
+  })();
+
+  (function () {
+    const toggle = document.querySelector('.nav-toggle');
+    const menu = document.getElementById('mobile-menu');
+
+    function closeMenu() {
+      menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    toggle.addEventListener('click', function () {
+      const isOpen = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    menu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', closeMenu);
+    });
+
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 900) closeMenu();
     });
   })();
 
