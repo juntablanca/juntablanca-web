@@ -66,19 +66,6 @@
   .nav-links a{opacity:0.75; transition:opacity .15s ease, color .15s ease; position:relative;}
   .nav-links a:hover{opacity:1; color:var(--accent);}
   .nav-links a.is-active{opacity:1; color:var(--accent);}
-  .nav-item{position:relative;}
-  .nav-drop-trigger{display:inline-flex; align-items:center; gap:5px; cursor:default;}
-  .nav-drop-trigger svg{width:10px; height:10px; transition:transform .2s ease;}
-  .nav-item:hover .nav-drop-trigger svg{transform:rotate(180deg);}
-  .nav-dropdown{
-    position:absolute; top:100%; left:50%; transform:translateX(-50%) translateY(4px);
-    background:#fff; border:1px solid var(--line); border-radius:4px;
-    padding:8px; min-width:140px; box-shadow:0 12px 24px rgba(17,17,17,0.08);
-    opacity:0; visibility:hidden; transition:opacity .18s ease, transform .18s ease;
-  }
-  .nav-item:hover .nav-dropdown{opacity:1; visibility:visible; transform:translateX(-50%) translateY(0);}
-  .nav-dropdown a{display:block; padding:8px 10px; border-radius:3px; opacity:0.85; font-size:13px;}
-  .nav-dropdown a:hover{opacity:1; background:var(--accent-soft); color:var(--accent-dark);}
   .nav-cta{
     background:var(--accent); color:#fff; border:1px solid var(--accent);
     padding:11px 22px; border-radius:100px; font-size:13px; font-weight:600; letter-spacing:0.3px;
@@ -112,8 +99,6 @@
     padding:18px 0; border-bottom:1px solid var(--line);
     font-size:20px; font-weight:600;
   }
-  .mobile-menu .mm-sub{display:flex; flex-direction:column; padding-left:16px; border-bottom:1px solid var(--line);}
-  .mobile-menu .mm-sub a{padding:12px 0; font-size:15px; font-weight:500; color:var(--muted);}
 
   /* Hero */
   .hero{
@@ -465,15 +450,7 @@
     </div>
     <div class="nav-links">
       <a href="#top" class="is-active">Inicio</a>
-      <div class="nav-item">
-        <a href="#servicios" class="nav-drop-trigger">Servicios
-          <svg viewBox="0 0 12 8" fill="none"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <div class="nav-dropdown">
-          <a href="#servicios">Cocinas</a>
-          <a href="#servicios">Baños</a>
-        </div>
-      </div>
+      <a href="#servicios">Servicios</a>
       <a href="#trabajo">Proyectos</a>
       <a href="#nosotros">Sobre nosotros</a>
       <a href="#faq">FAQ</a>
@@ -489,10 +466,6 @@
   <div class="container">
     <a href="#top">Inicio</a>
     <a href="#servicios">Servicios</a>
-    <div class="mm-sub">
-      <a href="#servicios">Cocinas</a>
-      <a href="#servicios">Baños</a>
-    </div>
     <a href="#trabajo">Proyectos</a>
     <a href="#nosotros">Sobre nosotros</a>
     <a href="#faq">FAQ</a>
