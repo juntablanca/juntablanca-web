@@ -144,42 +144,44 @@
   }
   .hero p{font-size:19px; max-width:500px; color:#EDEAE4; margin-bottom:34px; font-weight:400; letter-spacing:-0.2px; line-height:1.5;}
   .btn-row{display:flex; gap:16px; flex-wrap:wrap; align-items:center;}
+
+  /* Pill button with inverting icon circle — solid fill <-> outline on hover */
   .btn{
-    position:relative; display:inline-flex; align-items:center; gap:10px;
-    padding:17px 30px; border-radius:100px;
-    font-weight:600; font-size:14px; letter-spacing:0.2px;
-    transition:background .25s ease, border-color .25s ease, transform .2s ease, box-shadow .25s ease;
+    position:relative; display:inline-flex; align-items:center; gap:14px;
+    padding:5px 30px 5px 5px; border-radius:100px; border:2px solid var(--accent);
+    background:var(--accent); color:var(--ink);
+    font-weight:700; font-size:15px; letter-spacing:0.1px;
+    transition:background .3s ease, border-color .3s ease, transform .2s ease, box-shadow .3s ease;
   }
   .btn:active{transform:scale(0.96);}
-  .btn-primary{background:var(--accent); color:#fff;}
-  .btn-primary:hover{background:var(--accent-dark); box-shadow:0 8px 20px rgba(181,96,61,0.35);}
-  .btn-ghost{border:1px solid rgba(255,255,255,0.55); color:#fff;}
+  .btn-primary:hover{background:#fff; box-shadow:0 10px 26px rgba(181,96,61,0.3);}
+  .btn-circle{
+    width:42px; height:42px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    background:#fff; color:var(--accent);
+    transition:background .3s ease, color .3s ease;
+  }
+  .btn-circle svg{width:19px; height:19px;}
+  .btn:hover .btn-circle{background:var(--accent); color:#fff;}
+  .btn-ghost{
+    background:transparent; border:1px solid rgba(255,255,255,0.55); color:#fff;
+    padding:17px 30px;
+  }
   .btn-ghost:hover{background:rgba(255,255,255,0.14); border-color:#fff;}
 
-  /* Sliding label + icon interaction */
+  /* Sliding label interaction */
   .btn-label{position:relative; overflow:hidden; display:inline-block; height:1.25em; line-height:1.25em;}
   .btn-label span{display:block; transition:transform .4s cubic-bezier(.65,0,.35,1);}
   .btn-label span.dup{position:absolute; top:100%; left:0; white-space:nowrap;}
   .btn:hover .btn-label span{transform:translateY(-100%);}
-  .btn-icon{
-    display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;
-    width:18px; height:18px; transition:transform .35s cubic-bezier(.65,0,.35,1);
-  }
-  .btn-icon svg{width:100%; height:100%;}
-  .btn:hover .btn-icon{transform:translateX(5px);}
+
+  /* Small variant for repeated section CTAs */
+  .btn-sm{padding:4px 22px 4px 4px; font-size:13px; gap:10px;}
+  .btn-sm .btn-circle{width:32px; height:32px;}
+  .btn-sm .btn-circle svg{width:15px; height:15px;}
 
   /* Repeated mini CTA next to section headings */
   .section-head-row{display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap;}
-  .btn-mini{
-    display:inline-flex; align-items:center; gap:8px; flex-shrink:0;
-    padding:13px 24px; border-radius:100px; border:1px solid var(--ink);
-    color:var(--ink); font-size:13px; font-weight:600; letter-spacing:0.2px;
-    transition:background .25s ease, color .25s ease, transform .2s ease;
-  }
-  .btn-mini:hover{background:var(--ink); color:#fff;}
-  .btn-mini:hover .btn-icon{transform:translateX(4px);}
-  .btn-mini:active{transform:scale(0.95);}
-  .btn-mini .btn-icon{width:15px; height:15px; transition:transform .3s cubic-bezier(.65,0,.35,1);}
 
   /* Rotating badge */
   .rotating-badge{position:relative; width:120px; height:120px; flex-shrink:0; color:#fff;}
@@ -451,9 +453,9 @@
     <h1>El detalle bien hecho.</h1>
     <p>Diseñamos y construimos cocinas y baños que funcionan, duran y te hacen la vida más fácil.</p>
     <div class="btn-row">
-      <a href="#contacto" class="btn btn-primary">
-        <span class="btn-label"><span>Habla con nuestro equipo</span><span class="dup">Habla con nuestro equipo</span></span>
-        <span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      <a href="https://wa.me/message/D3ZDEIMICVM4B1" target="_blank" rel="noopener" class="btn btn-primary">
+        <span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.1-5.4a8.5 8.5 0 1 1 16.9-3.6z"/><path d="M8.5 10.3c0 3.1 2.6 5.7 5.7 5.7"/></svg></span>
+        <span class="btn-label"><span>Escríbenos por WhatsApp</span><span class="dup">Escríbenos por WhatsApp</span></span>
       </a>
       <a href="#trabajo" class="btn btn-ghost">
         <span class="btn-label"><span>Ver proyectos</span><span class="dup">Ver proyectos</span></span>
@@ -469,7 +471,7 @@
       <div class="reveal">
         <div class="section-eyebrow">(Sobre nosotros)</div>
         <h2>Creemos que las reformas merecen un equipo que de verdad se implique.</h2>
-        <a href="#contacto" class="btn-mini" style="margin-top:20px;">Habla con nuestro equipo<span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a href="https://wa.me/message/D3ZDEIMICVM4B1" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="margin-top:20px;"><span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.1-5.4a8.5 8.5 0 1 1 16.9-3.6z"/><path d="M8.5 10.3c0 3.1 2.6 5.7 5.7 5.7"/></svg></span><span class="btn-label"><span>Escríbenos por WhatsApp</span><span class="dup">Escríbenos por WhatsApp</span></span></a>
         <div class="about-image">
           <img src="assets/about_ejecucion.jpg" alt="Detalle de ejecución artesanal en madera de roble">
         </div>
@@ -507,7 +509,7 @@
         <div class="section-eyebrow reveal">Qué hacemos</div>
         <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:560px;">El Motor de Reformas de Junta Blanca.</h2>
       </div>
-      <a href="#contacto" class="btn-mini reveal">Habla con nuestro equipo<span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      <a href="https://wa.me/message/D3ZDEIMICVM4B1" target="_blank" rel="noopener" class="btn btn-primary btn-sm reveal"><span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.1-5.4a8.5 8.5 0 1 1 16.9-3.6z"/><path d="M8.5 10.3c0 3.1 2.6 5.7 5.7 5.7"/></svg></span><span class="btn-label"><span>Escríbenos por WhatsApp</span><span class="dup">Escríbenos por WhatsApp</span></span></a>
     </div>
     <div class="services-list" data-reveal-group>
       <div class="service-row reveal">
@@ -580,7 +582,7 @@
         <div class="section-eyebrow reveal">Nuestro trabajo</div>
         <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:560px;">Cada proyecto, <span class="soft">una historia bien hecha.</span></h2>
       </div>
-      <a href="#contacto" class="btn-mini reveal">Habla con nuestro equipo<span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      <a href="https://wa.me/message/D3ZDEIMICVM4B1" target="_blank" rel="noopener" class="btn btn-primary btn-sm reveal"><span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.1-5.4a8.5 8.5 0 1 1 16.9-3.6z"/><path d="M8.5 10.3c0 3.1 2.6 5.7 5.7 5.7"/></svg></span><span class="btn-label"><span>Escríbenos por WhatsApp</span><span class="dup">Escríbenos por WhatsApp</span></span></a>
     </div>
     <div class="work-grid" data-reveal-group>
       <div class="work-card reveal">
@@ -676,7 +678,7 @@
         <div class="section-eyebrow reveal">Por qué elegirnos</div>
         <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:600px;">Por qué las familias de Valencia eligen Junta Blanca.</h2>
       </div>
-      <a href="#contacto" class="btn-mini reveal">Habla con nuestro equipo<span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      <a href="https://wa.me/message/D3ZDEIMICVM4B1" target="_blank" rel="noopener" class="btn btn-primary btn-sm reveal"><span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.1-5.4a8.5 8.5 0 1 1 16.9-3.6z"/><path d="M8.5 10.3c0 3.1 2.6 5.7 5.7 5.7"/></svg></span><span class="btn-label"><span>Escríbenos por WhatsApp</span><span class="dup">Escríbenos por WhatsApp</span></span></a>
     </div>
     <div class="why-split">
       <div class="why-split-image reveal">
@@ -736,6 +738,10 @@
       <div>
         <h2>¿Lista para reformar?<br><span class="soft">Hablemos de tu próxima cocina o baño.</span></h2>
         <p>Cuéntanos qué espacio quieres reformar y te contactamos en menos de 24h con una propuesta inicial.</p>
+        <a href="https://wa.me/message/D3ZDEIMICVM4B1" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="margin-top:24px;">
+          <span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.1-5.4a8.5 8.5 0 1 1 16.9-3.6z"/><path d="M8.5 10.3c0 3.1 2.6 5.7 5.7 5.7"/></svg></span>
+          <span class="btn-label"><span>¿Prefieres WhatsApp? Escríbenos</span><span class="dup">¿Prefieres WhatsApp? Escríbenos</span></span>
+        </a>
       </div>
       <form name="contacto" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="contact-form">
         <input type="hidden" name="form-name" value="contacto">
