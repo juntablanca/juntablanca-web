@@ -307,10 +307,13 @@
   .cta-overlay{position:absolute; inset:0; background:linear-gradient(120deg, rgba(17,17,17,0.93) 0%, rgba(17,17,17,0.8) 100%); z-index:0;}
   .cta h2{font-size:clamp(32px,4.2vw,54px); margin-bottom:18px; letter-spacing:-0.03em; position:relative; z-index:2;}
   .cta p{color:#B9B6AF; font-size:18px; margin-bottom:0; max-width:440px; letter-spacing:-0.1px; line-height:1.55; position:relative; z-index:2;}
-  .cta form{display:flex; flex-direction:column; gap:14px; position:relative; z-index:2;}
+  .cta form{display:flex; flex-direction:column; gap:16px; position:relative; z-index:2;}
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .field-wrap{display:flex; flex-direction:column; gap:7px;}
+  .field-wrap label{font-size:13px; font-weight:600; color:#D8D3CC; letter-spacing:0.1px;}
   .cta input, .cta textarea{
     background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.22);
-    border-radius:10px; padding:14px 18px; color:#fff; font-size:14px; font-family:inherit;
+    border-radius:10px; padding:14px 16px; color:#fff; font-size:14px; font-family:inherit;
     transition:border-color .2s ease, background .2s ease;
   }
   .cta input:focus, .cta textarea:focus{outline:none; border-color:var(--accent); background:rgba(255,255,255,0.1);}
@@ -357,6 +360,52 @@
     font-size:12px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
   }
 
+  /* Newsletter popup */
+  .newsletter-overlay{
+    position:fixed; inset:0; background:rgba(17,17,17,0.55); backdrop-filter:blur(3px);
+    z-index:100; display:flex; align-items:center; justify-content:center; padding:24px;
+    opacity:0; visibility:hidden; transition:opacity .3s ease, visibility .3s ease;
+  }
+  .newsletter-overlay.open{opacity:1; visibility:visible;}
+  .newsletter-modal{
+    background:#fff; border-radius:16px; max-width:760px; width:100%; max-height:90vh;
+    display:grid; grid-template-columns:0.85fr 1.15fr; overflow:hidden; position:relative;
+    transform:scale(0.95) translateY(10px); transition:transform .3s ease;
+    box-shadow:0 40px 90px rgba(17,17,17,0.35);
+  }
+  .newsletter-overlay.open .newsletter-modal{transform:scale(1) translateY(0);}
+  .newsletter-image{background-size:cover; background-position:center;}
+  .newsletter-body{padding:44px 40px; display:flex; flex-direction:column; justify-content:center; overflow-y:auto;}
+  .newsletter-close{
+    position:absolute; top:16px; right:16px; width:32px; height:32px; border-radius:50%;
+    background:rgba(17,17,17,0.06); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; z-index:2; border:none; transition:background .2s ease;
+  }
+  .newsletter-close:hover{background:rgba(17,17,17,0.12);}
+  .newsletter-close svg{width:16px; height:16px; color:var(--ink);}
+  .newsletter-badge{
+    display:inline-flex; background:var(--accent-soft); color:var(--accent-dark);
+    font-size:11px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase;
+    padding:6px 14px; border-radius:100px; margin-bottom:18px; width:fit-content;
+  }
+  .newsletter-body h3{font-size:26px; letter-spacing:-0.02em; margin-bottom:12px; line-height:1.15;}
+  .newsletter-body p.nl-desc{font-size:15px; color:var(--muted); line-height:1.55; margin-bottom:22px;}
+  .newsletter-form{display:flex; flex-direction:column; gap:8px;}
+  .newsletter-form label{font-size:13px; font-weight:600;}
+  .newsletter-form input{
+    border:1px solid var(--line); border-radius:10px; padding:13px 16px;
+    font-size:14px; font-family:inherit; transition:border-color .2s ease;
+  }
+  .newsletter-form input:focus{outline:none; border-color:var(--accent);}
+  .newsletter-form .btn{margin-top:6px; align-self:flex-start;}
+  .newsletter-note{font-size:12px; color:var(--muted); margin-top:14px;}
+  .newsletter-status{font-size:13px; margin-top:10px; display:none; color:var(--accent-dark); font-weight:600;}
+  @media (max-width:640px){
+    .newsletter-modal{grid-template-columns:1fr;}
+    .newsletter-image{display:none;}
+    .newsletter-body{padding:36px 26px;}
+  }
+
   /* Scroll reveal */
   .reveal{
     opacity:0; transform:translateY(28px);
@@ -383,6 +432,7 @@
     .why-grid{grid-template-columns:1fr;}
     .process-grid{grid-template-columns:repeat(2,1fr);}
     .cta{grid-template-columns:1fr; padding:40px;}
+    .field-row{grid-template-columns:1fr;}
     .footer-grid{grid-template-columns:1fr 1fr;}
   }
 </style>
@@ -471,7 +521,7 @@
       <div class="reveal">
         <div class="section-eyebrow">(Sobre nosotros)</div>
         <h2>Creemos que las reformas merecen un equipo que de verdad se implique.</h2>
-        <a href="https://wa.me/message/D3ZDEIMICVM4B1" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="margin-top:20px;"><span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.1-5.4a8.5 8.5 0 1 1 16.9-3.6z"/><path d="M8.5 10.3c0 3.1 2.6 5.7 5.7 5.7"/></svg></span><span class="btn-label"><span>Escríbenos por WhatsApp</span><span class="dup">Escríbenos por WhatsApp</span></span></a>
+        <a href="https://wa.me/message/D3ZDEIMICVM4B1" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="margin-top:20px;"><span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.1-5.4a8.5 8.5 0 1 1 16.9-3.6z"/><path d="M8.5 10.3c0 3.1 2.6 5.7 5.7 5.7"/></svg></span><span class="btn-label"><span>Cuéntanos tu proyecto</span><span class="dup">Cuéntanos tu proyecto</span></span></a>
         <div class="about-image">
           <img src="assets/about_ejecucion.jpg" alt="Detalle de ejecución artesanal en madera de roble">
         </div>
@@ -509,7 +559,7 @@
         <div class="section-eyebrow reveal">Qué hacemos</div>
         <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:560px;">El Motor de Reformas de Junta Blanca.</h2>
       </div>
-      <a href="https://wa.me/message/D3ZDEIMICVM4B1" target="_blank" rel="noopener" class="btn btn-primary btn-sm reveal"><span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.1-5.4a8.5 8.5 0 1 1 16.9-3.6z"/><path d="M8.5 10.3c0 3.1 2.6 5.7 5.7 5.7"/></svg></span><span class="btn-label"><span>Escríbenos por WhatsApp</span><span class="dup">Escríbenos por WhatsApp</span></span></a>
+      <a href="https://wa.me/message/D3ZDEIMICVM4B1" target="_blank" rel="noopener" class="btn btn-primary btn-sm reveal"><span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.1-5.4a8.5 8.5 0 1 1 16.9-3.6z"/><path d="M8.5 10.3c0 3.1 2.6 5.7 5.7 5.7"/></svg></span><span class="btn-label"><span>Pregúntanos sin compromiso</span><span class="dup">Pregúntanos sin compromiso</span></span></a>
     </div>
     <div class="services-list" data-reveal-group>
       <div class="service-row reveal">
@@ -582,7 +632,7 @@
         <div class="section-eyebrow reveal">Nuestro trabajo</div>
         <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:560px;">Cada proyecto, <span class="soft">una historia bien hecha.</span></h2>
       </div>
-      <a href="https://wa.me/message/D3ZDEIMICVM4B1" target="_blank" rel="noopener" class="btn btn-primary btn-sm reveal"><span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.1-5.4a8.5 8.5 0 1 1 16.9-3.6z"/><path d="M8.5 10.3c0 3.1 2.6 5.7 5.7 5.7"/></svg></span><span class="btn-label"><span>Escríbenos por WhatsApp</span><span class="dup">Escríbenos por WhatsApp</span></span></a>
+      <a href="https://wa.me/message/D3ZDEIMICVM4B1" target="_blank" rel="noopener" class="btn btn-primary btn-sm reveal"><span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.1-5.4a8.5 8.5 0 1 1 16.9-3.6z"/><path d="M8.5 10.3c0 3.1 2.6 5.7 5.7 5.7"/></svg></span><span class="btn-label"><span>¿Dudas? Escríbenos</span><span class="dup">¿Dudas? Escríbenos</span></span></a>
     </div>
     <div class="work-grid" data-reveal-group>
       <div class="work-card reveal">
@@ -678,7 +728,7 @@
         <div class="section-eyebrow reveal">Por qué elegirnos</div>
         <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:600px;">Por qué las familias de Valencia eligen Junta Blanca.</h2>
       </div>
-      <a href="https://wa.me/message/D3ZDEIMICVM4B1" target="_blank" rel="noopener" class="btn btn-primary btn-sm reveal"><span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.1-5.4a8.5 8.5 0 1 1 16.9-3.6z"/><path d="M8.5 10.3c0 3.1 2.6 5.7 5.7 5.7"/></svg></span><span class="btn-label"><span>Escríbenos por WhatsApp</span><span class="dup">Escríbenos por WhatsApp</span></span></a>
+      <a href="https://wa.me/message/D3ZDEIMICVM4B1" target="_blank" rel="noopener" class="btn btn-primary btn-sm reveal"><span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 20l1.1-5.4a8.5 8.5 0 1 1 16.9-3.6z"/><path d="M8.5 10.3c0 3.1 2.6 5.7 5.7 5.7"/></svg></span><span class="btn-label"><span>Hablamos cuando quieras</span><span class="dup">Hablamos cuando quieras</span></span></a>
     </div>
     <div class="why-split">
       <div class="why-split-image reveal">
@@ -746,10 +796,30 @@
       <form name="contacto" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="contact-form">
         <input type="hidden" name="form-name" value="contacto">
         <p hidden><label>No rellenar: <input name="bot-field"></label></p>
-        <input type="text" name="nombre" placeholder="Nombre" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="text" name="telefono" placeholder="Teléfono">
-        <textarea rows="3" name="mensaje" placeholder="Cuéntanos tu proyecto"></textarea>
+        <div class="field-row">
+          <div class="field-wrap">
+            <label for="cf-nombre">Nombre</label>
+            <input id="cf-nombre" type="text" name="nombre" placeholder="Tu nombre" required>
+          </div>
+          <div class="field-wrap">
+            <label for="cf-apellidos">Apellidos</label>
+            <input id="cf-apellidos" type="text" name="apellidos" placeholder="Tus apellidos">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field-wrap">
+            <label for="cf-telefono">Teléfono</label>
+            <input id="cf-telefono" type="tel" name="telefono" placeholder="Tu teléfono" required>
+          </div>
+          <div class="field-wrap">
+            <label for="cf-email">Email</label>
+            <input id="cf-email" type="email" name="email" placeholder="Tu email" required>
+          </div>
+        </div>
+        <div class="field-wrap">
+          <label for="cf-mensaje">Mensaje</label>
+          <textarea id="cf-mensaje" rows="3" name="mensaje" placeholder="Cuéntanos tu proyecto"></textarea>
+        </div>
         <button type="submit">Enviar solicitud</button>
         <p id="contact-status" style="font-size:13px; color:#B9B6AF; display:none;"></p>
       </form>
@@ -826,6 +896,32 @@
     </div>
   </div>
 </footer>
+
+<div class="newsletter-overlay" id="newsletter-overlay">
+  <div class="newsletter-modal">
+    <button class="newsletter-close" id="newsletter-close" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="newsletter-image" style="background-image:url('assets/hero_cocina.jpg');"></div>
+    <div class="newsletter-body">
+      <span class="newsletter-badge">Newsletter</span>
+      <h3>Únete a la comunidad Junta Blanca</h3>
+      <p class="nl-desc">Antes y después de proyectos reales, ideas de diseño y consejos para tu próxima reforma — directo a tu email, sin spam.</p>
+      <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="nl-bot-field" id="newsletter-form" class="newsletter-form">
+        <input type="hidden" name="form-name" value="newsletter">
+        <p hidden><label>No rellenar: <input name="nl-bot-field"></label></p>
+        <label for="nl-email">Tu email</label>
+        <input id="nl-email" type="email" name="email" placeholder="tú@email.com" required>
+        <button type="submit" class="btn btn-primary">
+          <span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+          <span class="btn-label"><span>Suscribirme, es gratis</span><span class="dup">Suscribirme, es gratis</span></span>
+        </button>
+        <p class="newsletter-status" id="newsletter-status"></p>
+      </form>
+      <p class="newsletter-note">Puedes darte de baja cuando quieras.</p>
+    </div>
+  </div>
+</div>
 
 <script>
   (function () {
@@ -948,6 +1044,68 @@
     }
     prev.addEventListener('click', function () { scrollByCard(-1); });
     next.addEventListener('click', function () { scrollByCard(1); });
+  })();
+
+  (function () {
+    const overlay = document.getElementById('newsletter-overlay');
+    if (!overlay) return;
+    const closeBtn = document.getElementById('newsletter-close');
+    const form = document.getElementById('newsletter-form');
+    const status = document.getElementById('newsletter-status');
+
+    function isSubscribed() {
+      try { return localStorage.getItem('jb_nl_subscribed') === '1'; } catch (e) { return false; }
+    }
+    function shownCount() {
+      try { return parseInt(sessionStorage.getItem('jb_nl_shown') || '0', 10); } catch (e) { return 0; }
+    }
+    function markShown() {
+      try { sessionStorage.setItem('jb_nl_shown', String(shownCount() + 1)); } catch (e) {}
+    }
+    function openModal() {
+      if (isSubscribed() || overlay.classList.contains('open') || shownCount() >= 2) return;
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      markShown();
+    }
+    function closeModal() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+
+    // Trigger 1: shortly after entering the site
+    if (!isSubscribed() && shownCount() < 1) {
+      setTimeout(openModal, 2500);
+    }
+
+    // Trigger 2: after scrolling a bit into the page
+    let scrollTriggered = false;
+    window.addEventListener('scroll', function () {
+      if (scrollTriggered || isSubscribed()) return;
+      if (window.scrollY > window.innerHeight * 0.6) {
+        scrollTriggered = true;
+        openModal();
+      }
+    }, { passive: true });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const data = new URLSearchParams(new FormData(form)).toString();
+      fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: data })
+        .then(function () {
+          try { localStorage.setItem('jb_nl_subscribed', '1'); } catch (e) {}
+          status.textContent = '¡Gracias! Ya formas parte de la comunidad.';
+          status.style.display = 'block';
+          setTimeout(closeModal, 1800);
+        })
+        .catch(function () {
+          status.textContent = 'Ha ocurrido un error. Inténtalo de nuevo.';
+          status.style.display = 'block';
+        });
+    });
   })();
 
   (function () {
