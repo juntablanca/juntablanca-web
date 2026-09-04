@@ -43,16 +43,33 @@
     border-bottom:1px solid var(--line);
   }
   nav.container{
-    display:flex; align-items:center; justify-content:space-between;
-    height:84px;
+    position:relative; display:flex; align-items:center; justify-content:space-between;
+    height:84px; gap:16px;
   }
   .brand{display:flex; align-items:center;}
+  nav.container > .brand{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  }
   .brand img.logo-full{height:56px; width:auto; display:block;}
   .footer-brand .brand img.logo-full{height:60px;}
-  .nav-links{display:flex; gap:36px; font-size:14px; font-weight:500;}
+  .nav-links{display:flex; align-items:center; gap:28px; font-size:14px; font-weight:500; white-space:nowrap;}
   .nav-links a{opacity:0.75; transition:opacity .15s ease;}
   .nav-links a:hover{opacity:1;}
+  .nav-item{position:relative;}
+  .nav-drop-trigger{display:inline-flex; align-items:center; gap:5px; cursor:default;}
+  .nav-drop-trigger svg{width:10px; height:10px; transition:transform .2s ease;}
+  .nav-item:hover .nav-drop-trigger svg{transform:rotate(180deg);}
+  .nav-dropdown{
+    position:absolute; top:100%; left:50%; transform:translateX(-50%) translateY(4px);
+    background:#fff; border:1px solid var(--line); border-radius:4px;
+    padding:8px; min-width:140px; box-shadow:0 12px 24px rgba(17,17,17,0.08);
+    opacity:0; visibility:hidden; transition:opacity .18s ease, transform .18s ease;
+  }
+  .nav-item:hover .nav-dropdown{opacity:1; visibility:visible; transform:translateX(-50%) translateY(0);}
+  .nav-dropdown a{display:block; padding:8px 10px; border-radius:3px; opacity:0.85; font-size:13px;}
+  .nav-dropdown a:hover{opacity:1; background:var(--bg);}
   .nav-cta{
+    justify-self:end;
     border:1px solid var(--ink); padding:11px 22px;
     font-size:13px; font-weight:600; letter-spacing:0.3px;
     transition:background .15s ease, color .15s ease;
@@ -213,16 +230,25 @@
 </head>
 <body>
 
-<header>
+<header id="top">
   <nav class="container">
-    <div class="brand">
-      <img class="logo-full" src="assets/logo.svg" alt="Junta Blanca — Cocinas y Baños">
-    </div>
     <div class="nav-links">
-      <a href="#servicios">Cocinas</a>
-      <a href="#servicios">Baños</a>
+      <a href="#top">Inicio</a>
+      <div class="nav-item">
+        <a href="#servicios" class="nav-drop-trigger">Servicios
+          <svg viewBox="0 0 12 8" fill="none"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="nav-dropdown">
+          <a href="#servicios">Cocinas</a>
+          <a href="#servicios">Baños</a>
+        </div>
+      </div>
       <a href="#galeria">Proyectos</a>
       <a href="#nosotros">Sobre nosotros</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <div class="brand">
+      <img class="logo-full" src="assets/logo.svg" alt="Junta Blanca — Cocinas y Baños">
     </div>
     <a href="#contacto" class="nav-cta">Contacto</a>
   </nav>
