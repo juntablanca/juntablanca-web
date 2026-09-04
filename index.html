@@ -189,6 +189,16 @@
     font-size:12px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
   }
 
+  /* Scroll reveal */
+  .reveal{
+    opacity:0; transform:translateY(28px);
+    transition:opacity .7s cubic-bezier(.16,.84,.44,1), transform .7s cubic-bezier(.16,.84,.44,1);
+  }
+  .reveal.in-view{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1; transform:none; transition:none;}
+  }
+
   @media (max-width:900px){
     .nav-links{display:none;}
     .principles{grid-template-columns:repeat(2,1fr);}
@@ -234,23 +244,23 @@
 </section>
 
 <div class="principles container" style="padding-left:0; padding-right:0; max-width:1160px;">
-  <div class="principles" style="border-left:1px solid var(--line);">
-    <div class="principle">
+  <div class="principles" style="border-left:1px solid var(--line);" data-reveal-group>
+    <div class="principle reveal">
       <div class="cross"><span class="v"></span><span class="h"></span></div>
       <h4>Precisión</h4>
       <p>Cuidado en cada detalle.</p>
     </div>
-    <div class="principle">
+    <div class="principle reveal">
       <div class="cross"><span class="v"></span><span class="h"></span></div>
       <h4>Sencillez</h4>
       <p>Menos es más. Solo lo esencial.</p>
     </div>
-    <div class="principle">
+    <div class="principle reveal">
       <div class="cross"><span class="v"></span><span class="h"></span></div>
       <h4>Orden</h4>
       <p>Método, planificación y limpieza.</p>
     </div>
-    <div class="principle">
+    <div class="principle reveal">
       <div class="cross"><span class="v"></span><span class="h"></span></div>
       <h4>Durabilidad</h4>
       <p>Materiales y soluciones que perduran.</p>
@@ -259,53 +269,53 @@
 </div>
 
 <section id="nosotros">
-  <div class="container about-grid">
-    <div>
+  <div class="container about-grid" data-reveal-group>
+    <div class="reveal">
       <div class="section-eyebrow">Diseño · Ejecución · Acabados</div>
       <h2>Espacios que funcionan y perduran.</h2>
       <p>En Junta Blanca transformamos espacios cotidianos en lugares extraordinarios. Combinamos diseño, funcionalidad y materiales de alta calidad para crear cocinas y baños que mejoran tu día a día.</p>
       <a href="#galeria" class="link-arrow">Conócenos →</a>
     </div>
-    <img src="assets/hero_cocina.jpg" alt="Cocina reformada Junta Blanca">
+    <img class="reveal" src="assets/hero_cocina.jpg" alt="Cocina reformada Junta Blanca">
   </div>
 </section>
 
 <div class="gallery-wrap">
   <div class="container" style="padding:110px 32px;">
-    <div class="gallery-head" id="galeria">
+    <div class="gallery-head reveal" id="galeria">
       <div>
         <div class="section-eyebrow">Proyectos</div>
         <h2>Cada proyecto, una historia bien hecha.</h2>
       </div>
     </div>
-    <div class="gallery-grid">
-      <figure class="g-span2"><img src="assets/hero_cocina.jpg" alt="Cocina blanca y roble"><figcaption>Cocina en Valencia · Blanco y roble</figcaption></figure>
-      <figure><img src="assets/servicio_bano.jpg" alt="Baño beige minimalista"><figcaption>Baño en El Saler</figcaption></figure>
-      <figure><img src="assets/galeria_materiales.jpg" alt="Materiales seleccionados"></figure>
-      <div class="g-dark"><p>Menos es más. Lo esencial, bien hecho.</p><span>Junta Blanca</span></div>
-      <figure><img src="assets/galeria_bano2.jpg" alt="Ducha detalle negro mate"><figcaption>Baño en Ruzafa</figcaption></figure>
-      <figure class="g-span2"><img src="assets/galeria_cocina2.jpg" alt="Isla de cocina roble y blanco"><figcaption>Cocina en Patacona · Isla central</figcaption></figure>
+    <div class="gallery-grid" data-reveal-group>
+      <figure class="g-span2 reveal"><img src="assets/hero_cocina.jpg" alt="Cocina blanca y roble"><figcaption>Cocina en Valencia · Blanco y roble</figcaption></figure>
+      <figure class="reveal"><img src="assets/servicio_bano.jpg" alt="Baño beige minimalista"><figcaption>Baño en El Saler</figcaption></figure>
+      <figure class="reveal"><img src="assets/galeria_materiales.jpg" alt="Materiales seleccionados"></figure>
+      <div class="g-dark reveal"><p>Menos es más. Lo esencial, bien hecho.</p><span>Junta Blanca</span></div>
+      <figure class="reveal"><img src="assets/galeria_bano2.jpg" alt="Ducha detalle negro mate"><figcaption>Baño en Ruzafa</figcaption></figure>
+      <figure class="g-span2 reveal"><img src="assets/galeria_cocina2.jpg" alt="Isla de cocina roble y blanco"><figcaption>Cocina en Patacona · Isla central</figcaption></figure>
     </div>
   </div>
 </div>
 
 <section id="servicios">
   <div class="container">
-    <div class="section-eyebrow">Nuestro proceso</div>
-    <h2 style="font-size:clamp(26px,3.2vw,36px); font-weight:700; letter-spacing:-0.5px;">Así trabajamos.</h2>
-    <div class="process-grid">
-      <div class="process-step"><span class="num">01</span><h4>Escuchamos</h4><p>Entendemos tus necesidades y tu estilo de vida.</p></div>
-      <div class="process-step"><span class="num">02</span><h4>Diseñamos</h4><p>Creamos propuestas a medida con atención a cada detalle.</p></div>
-      <div class="process-step"><span class="num">03</span><h4>Planificamos</h4><p>Organizamos cada fase con precisión y transparencia.</p></div>
-      <div class="process-step"><span class="num">04</span><h4>Ejecutamos</h4><p>Cuidamos la instalación con profesionales especializados.</p></div>
-      <div class="process-step"><span class="num">05</span><h4>Acompañamos</h4><p>Estamos contigo incluso después de entregar tu proyecto.</p></div>
+    <div class="section-eyebrow reveal">Nuestro proceso</div>
+    <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); font-weight:700; letter-spacing:-0.5px;">Así trabajamos.</h2>
+    <div class="process-grid" data-reveal-group>
+      <div class="process-step reveal"><span class="num">01</span><h4>Escuchamos</h4><p>Entendemos tus necesidades y tu estilo de vida.</p></div>
+      <div class="process-step reveal"><span class="num">02</span><h4>Diseñamos</h4><p>Creamos propuestas a medida con atención a cada detalle.</p></div>
+      <div class="process-step reveal"><span class="num">03</span><h4>Planificamos</h4><p>Organizamos cada fase con precisión y transparencia.</p></div>
+      <div class="process-step reveal"><span class="num">04</span><h4>Ejecutamos</h4><p>Cuidamos la instalación con profesionales especializados.</p></div>
+      <div class="process-step reveal"><span class="num">05</span><h4>Acompañamos</h4><p>Estamos contigo incluso después de entregar tu proyecto.</p></div>
     </div>
   </div>
 </section>
 
 <section id="contacto">
   <div class="container">
-    <div class="cta">
+    <div class="cta reveal">
       <div>
         <h2>¿Tienes un proyecto?<br>Hablemos de tu próxima reforma.</h2>
         <p>Cuéntanos qué espacio quieres reformar y te contactamos en menos de 24h con una propuesta inicial.</p>
@@ -387,6 +397,29 @@
     }, { passive: true });
 
     updateParallax();
+  })();
+
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    document.querySelectorAll('[data-reveal-group]').forEach(function (group) {
+      group.querySelectorAll(':scope > .reveal').forEach(function (el, i) {
+        el.style.transitionDelay = (i * 90) + 'ms';
+      });
+    });
+
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(function (el) {
+      observer.observe(el);
+    });
   })();
 
   const form = document.getElementById('contact-form');
