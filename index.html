@@ -27,6 +27,8 @@
   img{max-width:100%; display:block;}
   a{color:inherit; text-decoration:none;}
   .container{max-width:1160px; margin:0 auto; padding:0 32px;}
+  h1,h2,h3,h4{line-height:1.08; letter-spacing:-0.02em; font-weight:700;}
+  .soft{font-weight:400; color:var(--muted);}
 
   /* Cross isotype */
   .cross{width:26px; height:26px; position:relative; flex-shrink:0;}
@@ -126,7 +128,7 @@
     font-size:clamp(36px,5.6vw,64px); font-weight:700; max-width:680px;
     line-height:1.06; margin-bottom:22px; letter-spacing:-0.5px;
   }
-  .hero p{font-size:17px; max-width:480px; color:#EDEAE4; margin-bottom:34px; font-weight:400;}
+  .hero p{font-size:19px; max-width:500px; color:#EDEAE4; margin-bottom:34px; font-weight:400; letter-spacing:-0.2px; line-height:1.5;}
   .btn-row{display:flex; gap:16px; flex-wrap:wrap;}
   .btn{
     display:inline-flex; align-items:center; gap:8px;
@@ -161,15 +163,15 @@
 
   /* About split */
   .about-grid{display:grid; grid-template-columns:0.85fr 1.15fr; gap:64px; align-items:center;}
-  .about-grid h2{font-size:clamp(28px,3.6vw,42px); font-weight:700; line-height:1.12; margin-bottom:20px; letter-spacing:-0.5px;}
-  .about-grid p{font-size:16px; color:#4a4844; margin-bottom:32px; max-width:440px;}
+  .about-grid h2{font-size:clamp(28px,3.6vw,42px); margin-bottom:20px; letter-spacing:-0.03em;}
+  .about-grid p{font-size:18px; color:#4a4844; margin-bottom:32px; max-width:440px; letter-spacing:-0.2px; line-height:1.55;}
   .about-grid img{border-radius:2px;}
   .link-arrow{font-weight:600; font-size:14px; border-bottom:1px solid var(--ink); padding-bottom:3px; display:inline-flex; gap:8px;}
 
   /* Gallery */
   .gallery-wrap{background:var(--white); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
   .gallery-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:48px; flex-wrap:wrap; gap:24px;}
-  .gallery-head h2{font-size:clamp(26px,3.2vw,36px); font-weight:700; letter-spacing:-0.5px;}
+  .gallery-head h2{font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em; max-width:460px;}
   .gallery-grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -203,8 +205,8 @@
     background:var(--ink); color:#fff; border-radius:2px;
     padding:72px; display:grid; grid-template-columns:1.2fr 1fr; gap:48px; align-items:center;
   }
-  .cta h2{font-size:clamp(28px,3.4vw,40px); font-weight:700; margin-bottom:16px; letter-spacing:-0.5px;}
-  .cta p{color:#B9B6AF; font-size:15px; margin-bottom:0; max-width:420px;}
+  .cta h2{font-size:clamp(28px,3.4vw,40px); margin-bottom:16px; letter-spacing:-0.03em;}
+  .cta p{color:#B9B6AF; font-size:17px; margin-bottom:0; max-width:420px; letter-spacing:-0.1px; line-height:1.5;}
   .cta form{display:flex; flex-direction:column; gap:14px;}
   .cta input, .cta textarea{
     background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.22);
@@ -341,7 +343,7 @@
   <div class="container about-grid" data-reveal-group>
     <div class="reveal">
       <div class="section-eyebrow">Diseño · Ejecución · Acabados</div>
-      <h2>Espacios que funcionan y perduran.</h2>
+      <h2>Espacios que funcionan <span class="soft">y perduran.</span></h2>
       <p>En Junta Blanca transformamos espacios cotidianos en lugares extraordinarios. Combinamos diseño, funcionalidad y materiales de alta calidad para crear cocinas y baños que mejoran tu día a día.</p>
       <a href="#galeria" class="link-arrow">Conócenos →</a>
     </div>
@@ -354,7 +356,7 @@
     <div class="gallery-head reveal" id="galeria">
       <div>
         <div class="section-eyebrow">Proyectos</div>
-        <h2>Cada proyecto, una historia bien hecha.</h2>
+        <h2>Cada proyecto, <span class="soft">una historia bien hecha.</span></h2>
       </div>
     </div>
     <div class="gallery-grid" data-reveal-group>
@@ -371,7 +373,7 @@
 <section id="servicios">
   <div class="container">
     <div class="section-eyebrow reveal">Nuestro proceso</div>
-    <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); font-weight:700; letter-spacing:-0.5px;">Así trabajamos.</h2>
+    <h2 class="reveal" style="font-size:clamp(26px,3.2vw,36px); letter-spacing:-0.03em;">Así trabajamos.</h2>
     <div class="process-grid" data-reveal-group>
       <div class="process-step reveal"><span class="num">01</span><h4>Escuchamos</h4><p>Entendemos tus necesidades y tu estilo de vida.</p></div>
       <div class="process-step reveal"><span class="num">02</span><h4>Diseñamos</h4><p>Creamos propuestas a medida con atención a cada detalle.</p></div>
@@ -386,7 +388,7 @@
   <div class="container">
     <div class="cta reveal">
       <div>
-        <h2>¿Tienes un proyecto?<br>Hablemos de tu próxima reforma.</h2>
+        <h2>¿Tienes un proyecto?<br><span class="soft">Hablemos de tu próxima reforma.</span></h2>
         <p>Cuéntanos qué espacio quieres reformar y te contactamos en menos de 24h con una propuesta inicial.</p>
       </div>
       <form name="contacto" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="contact-form">
