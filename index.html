@@ -435,6 +435,15 @@
   .newsletter-form .btn{margin-top:6px; align-self:flex-start;}
   .newsletter-note{font-size:12px; color:var(--muted); margin-top:14px;}
   .newsletter-status{font-size:13px; margin-top:10px; display:none; color:var(--accent-dark); font-weight:600;}
+  .newsletter-success{display:none; text-align:center; padding:12px 0;}
+  .newsletter-success.show{display:block;}
+  .newsletter-success .nl-check{
+    width:52px; height:52px; border-radius:50%; background:var(--accent-soft); color:var(--accent-dark);
+    display:flex; align-items:center; justify-content:center; margin:0 auto 18px;
+  }
+  .newsletter-success .nl-check svg{width:24px; height:24px;}
+  .newsletter-success h3{font-size:26px; letter-spacing:-0.02em; margin-bottom:10px;}
+  .newsletter-success p{font-size:15px; color:var(--muted); line-height:1.55;}
   @media (max-width:640px){
     .newsletter-modal{grid-template-columns:1fr;}
     .newsletter-image{display:none;}
@@ -894,7 +903,7 @@
           <span class="btn-label"><span>¿Prefieres WhatsApp? Escríbenos</span><span class="dup">¿Prefieres WhatsApp? Escríbenos</span></span>
         </a>
       </div>
-      <form name="contacto" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="contact-form">
+      <form name="contacto" method="POST" data-netlify="true" data-netlify-recaptcha="true" netlify-honeypot="bot-field" id="contact-form">
         <input type="hidden" name="form-name" value="contacto">
         <p hidden><label>No rellenar: <input name="bot-field"></label></p>
         <div class="field-row">
@@ -921,6 +930,7 @@
           <label for="cf-mensaje">Mensaje</label>
           <textarea id="cf-mensaje" rows="3" name="mensaje" placeholder="Cuéntanos tu proyecto"></textarea>
         </div>
+        <div data-netlify-recaptcha="true" style="margin:6px 0;"></div>
         <button type="submit">Enviar solicitud</button>
         <p id="contact-status" style="font-size:13px; color:#B9B6AF; display:none;"></p>
       </form>
@@ -1013,21 +1023,28 @@
     </button>
     <div class="newsletter-image" style="background-image:url('assets/newsletter_modal.jpg');"></div>
     <div class="newsletter-body">
-      <span class="newsletter-badge">Newsletter</span>
-      <h3>Únete a la comunidad Junta Blanca</h3>
-      <p class="nl-desc">Antes y después de proyectos reales, ideas de diseño y consejos para tu próxima reforma — directo a tu email, sin spam.</p>
-      <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="nl-bot-field" id="newsletter-form" class="newsletter-form">
-        <input type="hidden" name="form-name" value="newsletter">
-        <p hidden><label>No rellenar: <input name="nl-bot-field"></label></p>
-        <label for="nl-email">Tu email</label>
-        <input id="nl-email" type="email" name="email" placeholder="tú@email.com" required>
-        <button type="submit" class="btn btn-primary">
-          <span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
-          <span class="btn-label"><span>Suscribirme, es gratis</span><span class="dup">Suscribirme, es gratis</span></span>
-        </button>
-        <p class="newsletter-status" id="newsletter-status"></p>
-      </form>
-      <p class="newsletter-note">Puedes darte de baja cuando quieras.</p>
+      <div class="newsletter-default" id="newsletter-default">
+        <span class="newsletter-badge">Newsletter</span>
+        <h3>Únete a la comunidad Junta Blanca</h3>
+        <p class="nl-desc">Antes y después de proyectos reales, ideas de diseño y consejos para tu próxima reforma — directo a tu email, sin spam.</p>
+        <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="nl-bot-field" id="newsletter-form" class="newsletter-form">
+          <input type="hidden" name="form-name" value="newsletter">
+          <p hidden><label>No rellenar: <input name="nl-bot-field"></label></p>
+          <label for="nl-email">Tu email</label>
+          <input id="nl-email" type="email" name="email" placeholder="tú@email.com" required>
+          <button type="submit" class="btn btn-primary">
+            <span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+            <span class="btn-label"><span>Suscribirme, es gratis</span><span class="dup">Suscribirme, es gratis</span></span>
+          </button>
+          <p class="newsletter-status" id="newsletter-status"></p>
+        </form>
+        <p class="newsletter-note">Puedes darte de baja cuando quieras.</p>
+      </div>
+      <div class="newsletter-success" id="newsletter-success">
+        <span class="nl-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+        <h3>¡Bienvenido!</h3>
+        <p>Gracias por suscribirte a Junta Blanca.</p>
+      </div>
     </div>
   </div>
 </div>
@@ -1038,21 +1055,28 @@
   </button>
   <div class="newsletter-image" style="background-image:url('assets/newsletter_bar.jpg');"></div>
   <div class="newsletter-body">
-    <span class="newsletter-badge">Newsletter</span>
-    <h3>Únete a la comunidad Junta Blanca</h3>
-    <p class="nl-desc">Antes y después de proyectos reales, ideas de diseño y consejos para tu próxima reforma — directo a tu email, sin spam.</p>
-    <form name="newsletter-bar" method="POST" data-netlify="true" netlify-honeypot="nlb-bot-field" id="newsletter-bar-form" class="newsletter-form">
-      <input type="hidden" name="form-name" value="newsletter-bar">
-      <p hidden><label>No rellenar: <input name="nlb-bot-field"></label></p>
-      <label for="nlb-email">Tu email</label>
-      <input id="nlb-email" type="email" name="email" placeholder="tú@email.com" required>
-      <button type="submit" class="btn btn-primary">
-        <span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
-        <span class="btn-label"><span>Suscribirme, es gratis</span><span class="dup">Suscribirme, es gratis</span></span>
-      </button>
-      <p class="newsletter-status" id="newsletter-bar-status"></p>
-    </form>
-    <p class="newsletter-note">Puedes darte de baja cuando quieras.</p>
+    <div class="newsletter-default" id="newsletter-bar-default">
+      <span class="newsletter-badge">Newsletter</span>
+      <h3>Únete a la comunidad Junta Blanca</h3>
+      <p class="nl-desc">Antes y después de proyectos reales, ideas de diseño y consejos para tu próxima reforma — directo a tu email, sin spam.</p>
+      <form name="newsletter-bar" method="POST" data-netlify="true" netlify-honeypot="nlb-bot-field" id="newsletter-bar-form" class="newsletter-form">
+        <input type="hidden" name="form-name" value="newsletter-bar">
+        <p hidden><label>No rellenar: <input name="nlb-bot-field"></label></p>
+        <label for="nlb-email">Tu email</label>
+        <input id="nlb-email" type="email" name="email" placeholder="tú@email.com" required>
+        <button type="submit" class="btn btn-primary">
+          <span class="btn-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+          <span class="btn-label"><span>Suscribirme, es gratis</span><span class="dup">Suscribirme, es gratis</span></span>
+        </button>
+        <p class="newsletter-status" id="newsletter-bar-status"></p>
+      </form>
+      <p class="newsletter-note">Puedes darte de baja cuando quieras.</p>
+    </div>
+    <div class="newsletter-success" id="newsletter-bar-success">
+      <span class="nl-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+      <h3>¡Bienvenido!</h3>
+      <p>Gracias por suscribirte a Junta Blanca.</p>
+    </div>
   </div>
 </div>
 
@@ -1261,18 +1285,19 @@
       trabajoObserver.observe(trabajoSection);
     }
 
-    function wireForm(formId, statusId, onSuccess) {
+    function wireForm(formId, statusId, defaultId, successId) {
       const form = document.getElementById(formId);
       const status = document.getElementById(statusId);
+      const defaultBlock = document.getElementById(defaultId);
+      const successBlock = document.getElementById(successId);
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         const data = new URLSearchParams(new FormData(form)).toString();
         fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: data })
           .then(function () {
             setSubscribed();
-            status.textContent = '¡Gracias! Ya formas parte de la comunidad.';
-            status.style.display = 'block';
-            setTimeout(onSuccess, 1800);
+            defaultBlock.style.display = 'none';
+            successBlock.classList.add('show');
           })
           .catch(function () {
             status.textContent = 'Ha ocurrido un error. Inténtalo de nuevo.';
@@ -1280,8 +1305,8 @@
           });
       });
     }
-    wireForm('newsletter-form', 'newsletter-status', closeModal);
-    wireForm('newsletter-bar-form', 'newsletter-bar-status', closeBar);
+    wireForm('newsletter-form', 'newsletter-status', 'newsletter-default', 'newsletter-success');
+    wireForm('newsletter-bar-form', 'newsletter-bar-status', 'newsletter-bar-default', 'newsletter-bar-success');
   })();
 
   (function () {
@@ -1347,5 +1372,6 @@
   })();
 </script>
 
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 </html>
