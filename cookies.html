@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Política de Cookies — Junta Blanca</title><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F6F4; --ink:#111111; --muted:#A8A8A5; --line:#DEDEDA; --accent:#B5603D;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Inter',Arial,sans-serif; background:var(--bg); color:var(--ink); line-height:1.6;}
+  a{color:var(--accent);}
+  .container{max-width:760px; margin:0 auto; padding:0 24px;}
+  header{border-bottom:1px solid var(--line); padding:20px 0;}
+  header .container{display:flex; align-items:center; justify-content:space-between;}
+  .logo-full{height:44px;}
+  header a.back{font-size:14px; font-weight:600; color:var(--ink);}
+  main{padding:56px 0 80px;}
+  h1{font-size:clamp(28px,4vw,38px); font-weight:700; letter-spacing:-0.02em; margin-bottom:8px;}
+  .updated{font-size:13px; color:var(--muted); margin-bottom:40px;}
+  h2{font-size:19px; font-weight:700; margin:32px 0 12px;}
+  p, li{font-size:15px; color:#3a3733; margin-bottom:12px;}
+  ul{padding-left:20px; margin-bottom:12px;}
+  table{width:100%; border-collapse:collapse; margin:16px 0 24px; font-size:14px;}
+  th, td{border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top;}
+  th{background:#EFEDEA; font-weight:700;}
+  .btn-manage{
+    display:inline-block; margin-top:8px; padding:11px 22px; border-radius:100px;
+    background:var(--accent); color:#fff; font-weight:600; font-size:14px; cursor:pointer; border:none;
+  }
+  footer{border-top:1px solid var(--line); padding:32px 0; text-align:center; font-size:13px; color:var(--muted);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <img class="logo-full" src="assets/logo.svg" alt="Junta Blanca">
+    <a class="back" href="index.html">← Volver al inicio</a>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <h1>Política de Cookies</h1>
+    <p class="updated">Última actualización: septiembre de 2026</p>
+
+    <h2>1. ¿Qué son las cookies?</h2>
+    <p>Las cookies son pequeños archivos de texto que un sitio web almacena en tu navegador cuando lo visitas. Se utilizan para recordar tus preferencias, entender cómo usas la web, o mostrar contenido personalizado.</p>
+
+    <h2>2. Cookies que utilizamos</h2>
+    <table>
+      <tr><th>Cookie</th><th>Proveedor</th><th>Finalidad</th><th>Duración</th></tr>
+      <tr>
+        <td>jb_cookie_consent</td>
+        <td>Propia (juntablanca.com)</td>
+        <td>Recordar tu elección sobre cookies</td>
+        <td>Permanente (hasta que la borres)</td>
+      </tr>
+      <tr>
+        <td>_ga, _ga_*</td>
+        <td>Google Analytics</td>
+        <td>Analítica de tráfico y comportamiento en la web</td>
+        <td>Hasta 2 años</td>
+      </tr>
+      <tr>
+        <td>_clck, _clsk</td>
+        <td>Microsoft Clarity</td>
+        <td>Mapas de calor y grabaciones de sesión</td>
+        <td>Hasta 1 año</td>
+      </tr>
+    </table>
+    <p>Las cookies de Google Analytics y Microsoft Clarity <strong>solo se activan si aceptas expresamente</strong> el banner de cookies. La cookie propia que recuerda tu elección es necesaria para el funcionamiento del banner y se instala siempre.</p>
+
+    <h2>3. ¿Cómo puedo gestionar las cookies?</h2>
+    <p>Puedes cambiar tu decisión en cualquier momento borrando los datos de este sitio en la configuración de tu navegador, lo que hará que el banner de cookies vuelva a aparecer en tu próxima visita.</p>
+    <button class="btn-manage" onclick="try{localStorage.removeItem('jb_cookie_consent'); alert('Preferencia de cookies reiniciada. Recarga la página para ver el banner de nuevo.');}catch(e){}">Reiniciar mi preferencia de cookies</button>
+
+    <h2>4. Cookies de terceros</h2>
+    <p>Google y Microsoft son responsables del tratamiento de las cookies que instalan sus respectivas herramientas. Puedes consultar sus políticas aquí:</p>
+    <ul>
+      <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de privacidad de Google</a></li>
+      <li><a href="https://privacy.microsoft.com/es-es/privacystatement" target="_blank" rel="noopener">Política de privacidad de Microsoft</a></li>
+    </ul>
+
+    <h2>5. Más información</h2>
+    <p>Para más detalles sobre cómo tratamos tus datos personales, consulta nuestra <a href="privacidad.html">Política de Privacidad</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    © 2026 Junta Blanca. Todos los derechos reservados. ·
+    <a href="aviso-legal.html">Aviso legal</a> ·
+    <a href="privacidad.html">Política de privacidad</a>
+  </div>
+</footer>
+
+</body>
+</html>
