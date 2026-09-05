@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RKF6TN90WR"></script>
+<!-- Analytics/Clarity solo se cargan tras aceptar cookies (ver banner al final del <body>) -->
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-RKF6TN90WR');
-</script>
+  window.__jbLoadAnalytics = function () {
+    if (window.__jbAnalyticsLoaded) return;
+    window.__jbAnalyticsLoaded = true;
 
-<!-- Microsoft Clarity -->
-<script type="text/javascript">
+    var ga = document.createElement('script');
+    ga.async = true;
+    ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-RKF6TN90WR';
+    document.head.appendChild(ga);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ window.dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', 'G-RKF6TN90WR');
+
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "ydaf43rt6z");
+  };
+  try {
+    if (localStorage.getItem('jb_cookie_consent') === 'accepted') {
+      window.__jbLoadAnalytics();
+    }
+  } catch (e) {}
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -445,6 +456,47 @@
     .newsletter-bar{grid-template-columns:1fr; max-width:100%;}
     .newsletter-bar .newsletter-image{display:none;}
     .newsletter-bar .newsletter-body{padding:28px 24px;}
+  }
+
+  /* Cookie consent modal — overlay bloqueante, estilo Pepephone, tono desenfadado */
+  .cookie-overlay{
+    position:fixed; inset:0; z-index:200; padding:24px;
+    background:rgba(17,17,17,0.6); backdrop-filter:blur(3px);
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; visibility:hidden; transition:opacity .3s ease, visibility .3s ease;
+  }
+  .cookie-overlay.open{opacity:1; visibility:visible;}
+  .cookie-modal{
+    background:#fff; border-radius:18px; max-width:720px; width:100%; overflow:hidden;
+    display:grid; grid-template-columns:0.85fr 1.15fr;
+    box-shadow:0 40px 90px rgba(17,17,17,0.35);
+    transform:scale(0.95) translateY(10px); transition:transform .3s ease;
+  }
+  .cookie-overlay.open .cookie-modal{transform:scale(1) translateY(0);}
+  .cookie-image{background-size:cover; background-position:center; min-height:220px;}
+  .cookie-body{padding:36px 34px;}
+  .cookie-body .section-eyebrow{margin-bottom:10px;}
+  .cookie-body h3{font-size:21px; letter-spacing:-0.02em; margin-bottom:12px; line-height:1.2;}
+  .cookie-body p{font-size:14px; color:#3a3733; line-height:1.55;}
+  .cookie-body p a{color:var(--ink); text-decoration:underline; font-weight:600;}
+  .cookie-modal-actions{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:22px;}
+  .cookie-modal-actions button{
+    padding:12px 20px; border-radius:100px; font-size:13px; font-weight:600;
+    cursor:pointer; transition:background .2s ease, color .2s ease, border-color .2s ease, transform .15s ease;
+  }
+  .cookie-modal-actions button:active{transform:scale(0.96);}
+  .cookie-config{background:none; border:none; color:var(--muted); text-decoration:underline; padding:12px 4px;}
+  .cookie-config:hover{color:var(--ink);}
+  .cookie-reject{background:transparent; color:var(--ink); border:1px solid var(--line);}
+  .cookie-reject:hover{border-color:var(--ink);}
+  .cookie-accept{background:var(--accent); color:#fff; border:1px solid var(--accent);}
+  .cookie-accept:hover{background:var(--accent-dark); border-color:var(--accent-dark);}
+  @media (max-width:640px){
+    .cookie-modal{grid-template-columns:1fr;}
+    .cookie-image{display:none;}
+    .cookie-body{padding:30px 24px;}
+    .cookie-modal-actions{flex-direction:column-reverse; align-items:stretch;}
+    .cookie-modal-actions button{width:100%; text-align:center;}
   }
 
   /* Scroll reveal */
@@ -936,9 +988,9 @@
       <div class="footer-col">
         <h5>Información</h5>
         <a href="#faq">FAQ</a>
-        <a href="#">Materiales</a>
-        <a href="#">Garantía</a>
-        <a href="#">Política de privacidad</a>
+        <a href="aviso-legal.html">Aviso legal</a>
+        <a href="privacidad.html">Política de privacidad</a>
+        <a href="cookies.html">Política de cookies</a>
       </div>
       <div class="footer-col">
         <h5>Contacto</h5>
@@ -1001,6 +1053,22 @@
       <p class="newsletter-status" id="newsletter-bar-status"></p>
     </form>
     <p class="newsletter-note">Puedes darte de baja cuando quieras.</p>
+  </div>
+</div>
+
+<div class="cookie-overlay" id="cookie-banner">
+  <div class="cookie-modal">
+    <div class="cookie-image" style="background-image:url('assets/newsletter_modal.jpg');"></div>
+    <div class="cookie-body">
+      <div class="section-eyebrow">Nuestras cookies</div>
+      <h3>Cookies — de las digitales, no las de horno 🍪</h3>
+      <p>Usamos cookies propias y de terceros (Google Analytics, Microsoft Clarity) para entender cómo usas la web y hacerla un poco mejor cada vez — nada de fisgonear en tu vida. Si quieres saber más, echa un vistazo a nuestra <a href="cookies.html">Política de cookies</a>.</p>
+      <div class="cookie-modal-actions">
+        <a href="cookies.html" class="cookie-config">Configurar</a>
+        <button class="cookie-reject" id="cookie-reject">Rechazar</button>
+        <button class="cookie-accept" id="cookie-accept">Aceptar</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1231,6 +1299,31 @@
           status.textContent = 'Ha ocurrido un error. Escríbenos a hola@juntablanca.com.';
           status.style.display = 'block';
         });
+    });
+  })();
+
+  (function () {
+    const overlay = document.getElementById('cookie-banner');
+    const acceptBtn = document.getElementById('cookie-accept');
+    const rejectBtn = document.getElementById('cookie-reject');
+    if (!overlay) return;
+
+    let choice = null;
+    try { choice = localStorage.getItem('jb_cookie_consent'); } catch (e) {}
+
+    if (!choice) {
+      setTimeout(function () { overlay.classList.add('open'); }, 600);
+    }
+
+    acceptBtn.addEventListener('click', function () {
+      try { localStorage.setItem('jb_cookie_consent', 'accepted'); } catch (e) {}
+      overlay.classList.remove('open');
+      window.__jbLoadAnalytics();
+    });
+
+    rejectBtn.addEventListener('click', function () {
+      try { localStorage.setItem('jb_cookie_consent', 'rejected'); } catch (e) {}
+      overlay.classList.remove('open');
     });
   })();
 </script>
