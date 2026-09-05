@@ -1294,7 +1294,8 @@
         e.preventDefault();
         const data = new URLSearchParams(new FormData(form)).toString();
         fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: data })
-          .then(function () {
+          .then(function (response) {
+            if (!response.ok) throw new Error('Submission failed');
             setSubscribed();
             defaultBlock.style.display = 'none';
             successBlock.classList.add('show');
@@ -1315,14 +1316,22 @@
     if (!form) return;
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      if (typeof grecaptcha !== 'undefined' && grecaptcha.getResponse().length === 0) {
+        status.textContent = 'Por favor, completa el reCAPTCHA antes de enviar.';
+        status.style.display = 'block';
+        return;
+      }
       const data = new URLSearchParams(new FormData(form)).toString();
       fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: data })
-        .then(function () {
+        .then(function (response) {
+          if (!response.ok) throw new Error('Submission failed');
           form.reset();
+          if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
           status.textContent = 'Gracias, hemos recibido tu solicitud. Te contactamos pronto.';
           status.style.display = 'block';
         })
         .catch(function () {
+          if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
           status.textContent = 'Ha ocurrido un error. Escríbenos a hola@juntablanca.com.';
           status.style.display = 'block';
         });
