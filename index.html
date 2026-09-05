@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RKF6TN90WR"></script>
+<!-- Analytics/Clarity solo se cargan tras aceptar cookies (ver banner al final del <body>) -->
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-RKF6TN90WR');
-</script>
+  window.__jbLoadAnalytics = function () {
+    if (window.__jbAnalyticsLoaded) return;
+    window.__jbAnalyticsLoaded = true;
 
-<!-- Microsoft Clarity -->
-<script type="text/javascript">
+    var ga = document.createElement('script');
+    ga.async = true;
+    ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-RKF6TN90WR';
+    document.head.appendChild(ga);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ window.dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', 'G-RKF6TN90WR');
+
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "ydaf43rt6z");
+  };
+  try {
+    if (localStorage.getItem('jb_cookie_consent') === 'accepted') {
+      window.__jbLoadAnalytics();
+    }
+  } catch (e) {}
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -446,6 +457,26 @@
     .newsletter-bar .newsletter-image{display:none;}
     .newsletter-bar .newsletter-body{padding:28px 24px;}
   }
+
+  /* Cookie consent banner */
+  .cookie-banner{
+    position:fixed; left:16px; right:16px; bottom:16px; z-index:200; max-width:560px;
+    background:#fff; border:1px solid var(--line); border-radius:14px;
+    padding:22px 24px; box-shadow:0 20px 50px rgba(17,17,17,0.2);
+    transform:translateY(140%); transition:transform .4s cubic-bezier(.16,.84,.44,1);
+  }
+  .cookie-banner.open{transform:translateY(0);}
+  .cookie-banner p{font-size:13px; color:var(--muted); line-height:1.55; margin-bottom:16px;}
+  .cookie-banner p a{color:var(--ink); text-decoration:underline;}
+  .cookie-banner-actions{display:flex; gap:10px; flex-wrap:wrap;}
+  .cookie-banner-actions button{
+    padding:11px 20px; border-radius:100px; font-size:13px; font-weight:600;
+    cursor:pointer; transition:background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .cookie-accept{background:var(--accent); color:#fff; border:1px solid var(--accent);}
+  .cookie-accept:hover{background:var(--accent-dark);}
+  .cookie-reject{background:transparent; color:var(--ink); border:1px solid var(--line);}
+  .cookie-reject:hover{border-color:var(--ink);}
 
   /* Scroll reveal */
   .reveal{
@@ -1004,6 +1035,14 @@
   </div>
 </div>
 
+<div class="cookie-banner" id="cookie-banner">
+  <p>Usamos cookies propias y de terceros (Google Analytics, Microsoft Clarity) para analizar el tráfico y mejorar la web. Puedes aceptarlas o rechazarlas — no afecta al funcionamiento básico del sitio. Más información en nuestra <a href="cookies.html">Política de cookies</a>.</p>
+  <div class="cookie-banner-actions">
+    <button class="cookie-accept" id="cookie-accept">Aceptar todas</button>
+    <button class="cookie-reject" id="cookie-reject">Rechazar</button>
+  </div>
+</div>
+
 <script>
   (function () {
     const toggle = document.querySelector('.nav-toggle');
@@ -1231,6 +1270,31 @@
           status.textContent = 'Ha ocurrido un error. Escríbenos a hola@juntablanca.com.';
           status.style.display = 'block';
         });
+    });
+  })();
+
+  (function () {
+    const banner = document.getElementById('cookie-banner');
+    const acceptBtn = document.getElementById('cookie-accept');
+    const rejectBtn = document.getElementById('cookie-reject');
+    if (!banner) return;
+
+    let choice = null;
+    try { choice = localStorage.getItem('jb_cookie_consent'); } catch (e) {}
+
+    if (!choice) {
+      setTimeout(function () { banner.classList.add('open'); }, 600);
+    }
+
+    acceptBtn.addEventListener('click', function () {
+      try { localStorage.setItem('jb_cookie_consent', 'accepted'); } catch (e) {}
+      banner.classList.remove('open');
+      window.__jbLoadAnalytics();
+    });
+
+    rejectBtn.addEventListener('click', function () {
+      try { localStorage.setItem('jb_cookie_consent', 'rejected'); } catch (e) {}
+      banner.classList.remove('open');
     });
   })();
 </script>
