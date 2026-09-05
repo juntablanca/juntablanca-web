@@ -458,25 +458,44 @@
     .newsletter-bar .newsletter-body{padding:28px 24px;}
   }
 
-  /* Cookie consent banner */
+  /* Cookie consent banner — full-width bottom bar, tono desenfadado */
   .cookie-banner{
-    position:fixed; left:16px; right:16px; bottom:16px; z-index:200; max-width:560px;
-    background:#fff; border:1px solid var(--line); border-radius:14px;
-    padding:22px 24px; box-shadow:0 20px 50px rgba(17,17,17,0.2);
-    transform:translateY(140%); transition:transform .4s cubic-bezier(.16,.84,.44,1);
+    position:fixed; left:0; right:0; bottom:0; z-index:200;
+    background:var(--bg); border-top:1px solid var(--line);
+    box-shadow:0 -12px 40px rgba(17,17,17,0.1);
+    transform:translateY(100%); transition:transform .45s cubic-bezier(.16,.84,.44,1);
   }
   .cookie-banner.open{transform:translateY(0);}
-  .cookie-banner p{font-size:13px; color:var(--muted); line-height:1.55; margin-bottom:16px;}
-  .cookie-banner p a{color:var(--ink); text-decoration:underline;}
-  .cookie-banner-actions{display:flex; gap:10px; flex-wrap:wrap;}
-  .cookie-banner-actions button{
-    padding:11px 20px; border-radius:100px; font-size:13px; font-weight:600;
-    cursor:pointer; transition:background .2s ease, color .2s ease, border-color .2s ease;
+  .cookie-banner-inner{
+    max-width:1160px; margin:0 auto; padding:22px 64px 22px 32px;
+    display:flex; align-items:center; gap:24px; flex-wrap:wrap;
   }
-  .cookie-accept{background:var(--accent); color:#fff; border:1px solid var(--accent);}
-  .cookie-accept:hover{background:var(--accent-dark);}
+  .cookie-emoji{font-size:28px; flex-shrink:0; line-height:1;}
+  .cookie-banner-text{flex:1; min-width:240px;}
+  .cookie-banner-text p{font-size:14px; color:#3a3733; line-height:1.5;}
+  .cookie-banner-text p a{color:var(--ink); text-decoration:underline; font-weight:600;}
+  .cookie-banner-actions{display:flex; align-items:center; gap:18px; flex-wrap:wrap;}
+  .cookie-prefs{font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:var(--ink); text-decoration:underline;}
+  .cookie-banner-actions button{
+    padding:12px 22px; border-radius:100px; font-size:13px; font-weight:600;
+    cursor:pointer; transition:background .2s ease, color .2s ease, border-color .2s ease, transform .15s ease;
+  }
+  .cookie-banner-actions button:active{transform:scale(0.96);}
+  .cookie-accept{background:var(--ink); color:#fff; border:1px solid var(--ink);}
+  .cookie-accept:hover{background:var(--accent); border-color:var(--accent);}
   .cookie-reject{background:transparent; color:var(--ink); border:1px solid var(--line);}
   .cookie-reject:hover{border-color:var(--ink);}
+  .cookie-close{
+    position:absolute; top:18px; right:18px; width:32px; height:32px; border-radius:50%;
+    background:#fff; border:1px solid var(--line); color:var(--muted);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:14px;
+    transition:background .2s ease, color .2s ease;
+  }
+  .cookie-close:hover{background:var(--ink); color:#fff; border-color:var(--ink);}
+  @media (max-width:640px){
+    .cookie-banner-inner{padding:20px 52px 20px 20px; gap:14px;}
+    .cookie-banner-actions{width:100%; justify-content:space-between;}
+  }
 
   /* Scroll reveal */
   .reveal{
@@ -1036,11 +1055,18 @@
 </div>
 
 <div class="cookie-banner" id="cookie-banner">
-  <p>Usamos cookies propias y de terceros (Google Analytics, Microsoft Clarity) para analizar el tráfico y mejorar la web. Puedes aceptarlas o rechazarlas — no afecta al funcionamiento básico del sitio. Más información en nuestra <a href="cookies.html">Política de cookies</a>.</p>
-  <div class="cookie-banner-actions">
-    <button class="cookie-accept" id="cookie-accept">Aceptar todas</button>
-    <button class="cookie-reject" id="cookie-reject">Rechazar</button>
+  <div class="cookie-banner-inner">
+    <div class="cookie-emoji">🍪</div>
+    <div class="cookie-banner-text">
+      <p>Usamos cookies — de las digitales, no las de horno. Nos ayudan a entender cómo usas la web (Google Analytics, Microsoft Clarity) para hacerla un poco mejor cada vez. Tú decides. Más detalle en nuestra <a href="cookies.html">Política de cookies</a>.</p>
+    </div>
+    <div class="cookie-banner-actions">
+      <a href="cookies.html" class="cookie-prefs">Preferencias</a>
+      <button class="cookie-reject" id="cookie-reject">Rechazar</button>
+      <button class="cookie-accept" id="cookie-accept">Aceptar</button>
+    </div>
   </div>
+  <button class="cookie-close" id="cookie-close" aria-label="Cerrar">✕</button>
 </div>
 
 <script>
@@ -1277,6 +1303,7 @@
     const banner = document.getElementById('cookie-banner');
     const acceptBtn = document.getElementById('cookie-accept');
     const rejectBtn = document.getElementById('cookie-reject');
+    const closeBtn = document.getElementById('cookie-close');
     if (!banner) return;
 
     let choice = null;
@@ -1293,6 +1320,12 @@
     });
 
     rejectBtn.addEventListener('click', function () {
+      try { localStorage.setItem('jb_cookie_consent', 'rejected'); } catch (e) {}
+      banner.classList.remove('open');
+    });
+
+    // Cerrar con la X equivale a rechazar (privacidad por defecto)
+    closeBtn.addEventListener('click', function () {
       try { localStorage.setItem('jb_cookie_consent', 'rejected'); } catch (e) {}
       banner.classList.remove('open');
     });
