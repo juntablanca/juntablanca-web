@@ -1242,9 +1242,11 @@
     overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
     document.getElementById('newsletter-bar-close').addEventListener('click', closeBar);
 
-    if (!isSubscribed() && shownCount() < 1) {
-      setTimeout(openModal, 3500);
-    }
+    // La entrada se dispara justo después de decidir sobre las cookies (ver IIFE de cookies más abajo),
+    // no con un temporizador independiente — así el orden queda garantizado: cookies primero, newsletter después.
+    window.__jbShowNewsletterModal = function () {
+      if (!isSubscribed() && shownCount() < 1) openModal();
+    };
 
     const trabajoSection = document.getElementById('trabajo');
     if (trabajoSection && !isSubscribed()) {
@@ -1311,19 +1313,36 @@
     let choice = null;
     try { choice = localStorage.getItem('jb_cookie_consent'); } catch (e) {}
 
+    function afterDecision() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+      // La newsletter espera a que decidas sobre las cookies, y aparece justo después
+      setTimeout(function () {
+        if (window.__jbShowNewsletterModal) window.__jbShowNewsletterModal();
+      }, 700);
+    }
+
     if (!choice) {
-      setTimeout(function () { overlay.classList.add('open'); }, 600);
+      setTimeout(function () {
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }, 600);
+    } else {
+      // Ya decidiste sobre las cookies en una visita anterior: la newsletter sigue su propio calendario
+      setTimeout(function () {
+        if (window.__jbShowNewsletterModal) window.__jbShowNewsletterModal();
+      }, 1200);
     }
 
     acceptBtn.addEventListener('click', function () {
       try { localStorage.setItem('jb_cookie_consent', 'accepted'); } catch (e) {}
-      overlay.classList.remove('open');
       window.__jbLoadAnalytics();
+      afterDecision();
     });
 
     rejectBtn.addEventListener('click', function () {
       try { localStorage.setItem('jb_cookie_consent', 'rejected'); } catch (e) {}
-      overlay.classList.remove('open');
+      afterDecision();
     });
   })();
 </script>
