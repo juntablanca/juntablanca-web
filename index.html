@@ -483,8 +483,11 @@
   .cookie-banner-actions button:active{transform:scale(0.96);}
   .cookie-accept{background:var(--ink); color:#fff; border:1px solid var(--ink);}
   .cookie-accept:hover{background:var(--accent); border-color:var(--accent);}
-  .cookie-reject{background:transparent; color:var(--ink); border:1px solid var(--line);}
-  .cookie-reject:hover{border-color:var(--ink);}
+  .cookie-reject{
+    background:none; border:none; padding:8px 2px; border-radius:0;
+    color:var(--muted); font-size:13px; font-weight:500; text-decoration:underline;
+  }
+  .cookie-reject:hover{color:var(--ink);}
   .cookie-close{
     position:absolute; top:18px; right:18px; width:32px; height:32px; border-radius:50%;
     background:#fff; border:1px solid var(--line); color:var(--muted);
